@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request For Image</title>
+	<link rel="stylesheet" href="./css/fv.css" type="text/css" />
+	<!--[if IE]>
+	<style>
+		.item .tooltip .content{ display:none; opacity:1; }
+		.item .tooltip:hover .content{ display:block; }
+	</style>
+	<![endif]-->
+</head>
+<body>
+
+<form class="login" id="login">
+    <h1 class="login-title">OpenStackLogin</h1>
+    <input type="text" class="login-input" placeholder="UserName" autofocus id="username">
+    <input type="password" class="login-input" placeholder="Password" id="password">
+	<input type="text" class="login-input" placeholder="TenentId" id="tenentId">
+	<select class="login-input">
+	    <option value="OpenStack" selected="true">OpenStack</option>
+		<option value="AWS">AWS</option></select>
+    <input type="submit" value="Lets Go" class="login-button">
+  <p class="login-lost"><a href="">Forgot Password?</a></p>
+  </form>
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://dropthebit.com/demos/validator/multifield.js"></script>
+    <script src="http://dropthebit.com/demos/validator/validator.js"></script>
+	<script>
+		// initialize the validator function
+		validator.message['date'] = 'not a real date';
+		$("#login").submit(function() {
+		//console.log("connecting");
+		alert("connecting");
+    //var url = "/rest/dashboard"; // the script where you handle the form input.
+    var userID =$("#username").val();
+    var password =$("#password").val();
+    var tenentId = $("#tenentId").val();
+    var url = "http://localhost:8080/openstackweb/openstack/dashboard?userID="+userID+"&password="
+    		+password+"&tenentId="+tenentId;
+    alert(url);
+    $.ajax({
+           type: "GET",
+           url: url,
+           data: $("#idForm").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               alert(data); // show response from the php script.
+           }
+         });
+
+        return false; // avoid to execute the actual submit of the form.
+     });
+		// validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+		$('form')
+			.on('blur', 'input[required], input.optional, select.required', validator.checkField)
+			.on('change', 'select.required', validator.checkField);
+			
+		$('.multi.required')
+			.on('keyup', 'input', function(){ 
+				validator.checkField.apply( $(this).siblings().last()[0] );
+			}).on('blur', 'input', function(){ 
+				validator.checkField.apply( $(this).siblings().last()[0] );
+			});
+		
+		// bind the validation to the form submit event
+		//$('#send').click('submit');//.prop('disabled', true);
+		
+		$('form').submit(function(e){
+			e.preventDefault();
+			var submit = true;
+			// evaluate the form using generic validaing
+			if( !validator.checkAll( $(this) ) ){
+				submit = false;
+			}
+
+			if( submit )
+				this.submit();
+			return false;
+		});
+		
+		/* FOR DEMO ONLY */
+		$('#vfields').change(function(){
+			$('form').toggleClass('mode2');
+		}).prop('checked',false);
+		
+		$('#alerts').change(function(){
+			validator.defaults.alerts = (this.checked) ? false : true;
+			if( this.checked )
+				$('form .alert').remove();
+		}).prop('checked',false);
+	</script>
+</body>
+</html>

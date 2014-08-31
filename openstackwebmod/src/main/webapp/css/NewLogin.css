@@ -1,0 +1,326 @@
+legend.login {
+    background-color: #CC3333;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    
+   
+}
+.box-info {
+    border-color: #DCE6BE;
+    
+}
+
+.box-warning {
+    border-color: #DB4D4D;
+     style="margin-left:650px;
+    margin-right:150px; 
+}
+
+
+.box-info, .box-warning, .box-hint, .box-download {
+    color: #FFFFFF;
+    margin: 15px 0;
+    padding: 10px 10px 10px 40px;
+    text-align: justify;
+}
+
+dl.separator
+{
+	
+	font-weight: 300;
+    font-size:16px;
+}
+
+.login-back
+{
+  background: none repeat scroll 0 0 rgba(180, 180, 180, 0.2);
+    box-shadow: 0 0 7px #777777;
+}
+dl.separator dt {
+    clear: both;
+    float: left;
+    padding-right: 10px;
+    width: 150px;
+}
+dl.separator dd {
+    border-left: 1px solid #999999;
+    margin-left: 160px;
+    padding: 5px 0 5px 20px;
+}
+dl.separator dt {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    position: relative;
+}
+dl.separator dt:before {
+    border-top: 1px solid #999999;
+    content: "";
+    position: absolute;
+    right: -15px;
+    top: 0;
+    width: 30px;
+}
+dl.separator dt:after {
+    background: none repeat scroll 0 0 #999999;
+    border: 1px solid #999999;
+    content: "";
+    height: 3px;
+    position: absolute;
+    right: -3px;
+    top: -2px;
+    width: 3px;
+}
+dl.separator dt:first-child:before, dl.separator dt:first-child:after {
+    display: none;
+}
+
+
+fieldset.login-fieldset
+{
+	  background-color: #DDDDDD;
+    
+    border: 1px solid #999999;
+    
+    margin: 30px 0;
+	font-style: normal;
+   
+}
+input, select, textarea {
+    margin: 3px 3px 3px 10px;
+}
+
+.blueButton {
+    background-color: #426EA0;   
+    color: white !important;
+    }
+    
+    .tile .tileTitle {
+    font-weight: lighter;
+}
+.tile {
+    font-weight: lighter;
+}
+.tile div {
+    font-weight: lighter;
+}
+.tile a {
+    font-weight: lighter;
+}
+.tileFlip {
+    overflow: visible;
+    padding: 0;
+    z-index: 0;
+}
+.tileFlip:hover {
+    border: medium none;
+    box-shadow: none;
+}
+.tileFlip .flipContainer {
+    -moz-transform-style: preserve-3d;
+    -moz-transition: -moz-transform 0.6s ease 0s;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+.tileFlipped {
+    -moz-perspective: 600px;
+}
+.tileFlip:hover .flipContainer {
+    border: 1px solid #FFFFFF !important;
+    box-shadow: 0 0 10px #333333;
+}
+.support3D:hover .flipContainer {
+    -moz-transform: rotateY(180deg);
+}
+.tileFlipped .flipBack {
+    -moz-backface-visibility: hidden;
+    -moz-transform: rotateY(180deg);
+}
+.tileFlipped .flipFront {
+    -moz-backface-visibility: hidden;
+}
+.flipFront {
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+.flipBack {
+    -moz-box-sizing: border-box;
+    color: white;
+    display: block;
+    height: 100%;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+}
+.tileFlipped .tileLabelWrapper.bottom {
+    -moz-backface-visibility: hidden;
+}
+.tileFlip .tileLabelWrapper.bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.tileHoverEffectFold .slice {
+    width: 75px;
+}
+.tileHoverEffectFold .view-back {
+    width: 35%;
+}
+.tileHoverEffectFold .s2, .tileHoverEffectFold .s3, .tileHoverEffectFold .s4 {
+    margin-left: 75px;
+}
+.tileHoverEffectFold .s1 {
+    background-position: 0 0;
+}
+.tileHoverEffectFold .s2 {
+    background-position: -75px 0;
+}
+.tileHoverEffectFold .s3 {
+    background-position: -150px 0;
+}
+.tileHoverEffectFold .s4 {
+    background-position: -225px 0;
+}
+.tileHoverEffectFold .overlay {
+    width: 75px;
+}
+.tileHoverEffectFold:hover .s2n, .tileHoverEffectFold:hover .s3n, .tileHoverEffectFold:hover .s4n {
+    margin-left: 74px;
+}
+.tileHoverEffectFoldHover {
+    -moz-perspective: 500px;
+    overflow: visible;
+}
+.tileHoverEffectFold .slice {
+    -moz-transform-style: preserve-3d;
+    height: 100%;
+    z-index: 10;
+}
+.tileHoverEffectFoldHover .slice {
+    -moz-transform-origin: left center;
+    -moz-transition: -moz-transform 200ms ease 0s;
+}
+.tileHoverEffectFold .view-back {
+    display: block;
+    float: right;
+    font-size: 16px;
+    height: 100%;
+    padding: 5px 20px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    z-index: 0;
+}
+.tileHoverEffectFold .overlay {
+    -moz-transition: opacity 200ms ease 0s;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+}
+.tileHoverEffectFold:hover .overlay {
+    opacity: 1;
+}
+.tileHoverEffectFold img {
+    position: absolute;
+    z-index: 1;
+}
+.tileHoverEffectFoldHover .s2n {
+    -moz-transform: rotate3d(0, 1, 0, -63deg);
+    z-index: 101;
+}
+.tileHoverEffectFoldHover .s3n {
+    -moz-transform: rotate3d(0, 1, 0, 126deg);
+    z-index: 101;
+}
+.tileHoverEffectFoldHover .s4n {
+    -moz-transform: rotate3d(0, 1, 0, -126deg);
+    z-index: 101;
+}
+.tileHoverEffectFoldHover .s1 > .overlay {
+    background: -moz-linear-gradient(right center , rgba(0, 0, 0, 0.05) 0%, transparent 100%) repeat scroll 0 0 transparent;
+}
+.tileHoverEffectFoldHover .s2 > .overlay {
+    background: -moz-linear-gradient(left center , rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%) repeat scroll 0 0 transparent;
+}
+.tileHoverEffectFoldHover .s3 > .overlay {
+    background: -moz-linear-gradient(right center , rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%) repeat scroll 0 0 transparent;
+}
+.tileHoverEffectFoldHover .s4 > .overlay {
+    background: -moz-linear-gradient(left center , rgba(0, 0, 0, 0.8) 0%, transparent 100%) repeat scroll 0 0 transparent;
+}
+.tileHoverEffectRight {
+    overflow: hidden;
+}
+.tileHoverEffectLeft .view-back {
+    display: block;
+    font-size: 16px;
+    height: 100%;
+    left: 0;
+    padding: 5px 10px;
+    position: absolute;
+    text-align: left;
+    width: 35%;
+    z-index: 0;
+}
+.tileHoverEffectLeft img {
+    height: 100%;
+    position: relative;
+    width: auto;
+    z-index: 1;
+}
+.tileHoverEffectRight {
+    overflow: hidden;
+}
+.tileHoverEffectRight .view-back {
+    display: block;
+    float: right;
+    font-size: 16px;
+    height: 100%;
+    padding: 5px 10px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 35%;
+    z-index: 0;
+}
+.tileHoverEffectRight img {
+    height: 100%;
+    position: relative;
+    width: auto;
+    z-index: 1;
+}
+.tileSlideshowImage, .tileSlideshowImageBack {
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+.tileSlideshowImageBack {
+    z-index: 2;
+}
+
+div.tileLabel{
+	display:inline-block;
+	font-size:14px;	
+	text-decoration: none;  
+    color: #FFF; 
+}
+
+div.pageContent {
+    height:auto 
+}
+
+
+.hidden{
+	display:none;
+}

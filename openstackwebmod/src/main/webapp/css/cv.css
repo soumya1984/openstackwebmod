@@ -1,0 +1,72 @@
+.cv-legend {
+    background-color: #426EA0;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 1px 3px;
+}
+
+.cv-fieldset {
+    border: 2px solid #999999;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+#create_volume_page {
+  margin: 0 auto 60px;
+  width: 530px;
+  height: 200px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top : 30px;
+  margn-bottom: 30px;
+  max-width: 900px;
+  min-height: 200px;
+  min-width: 300px;
+  padding: 30px 30px 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.hidden {
+	display : none;
+}
+
+.box-content, .box-note {
+    margin: 15px 0;
+    padding: 15px;
+    text-align: justify;
+}
+.box-info, .box-warning, .box-hint, .box-download {
+    color: #FFFFFF;
+    margin: 15px 0;
+    padding: 10px 10px 10px 40px;
+    text-align: justify;
+}
+.box-note {
+    background-color: #FF6600;
+    border-color: #FF9900;
+    color: #FFFFFF;
+}
+.box-info {
+    border-color: #B2B2FF;
+}
+.box-warning {
+    border-color: #DB4D4D;
+}
+.box-hint {
+    border-color: #FAE6BE;
+}
+.box-download {
+    border-color: #DCE6BE;
+    background: no-repeat scroll 0 0 #789600;
+}
+.box-content {
+    background: none repeat scroll 0 0 #555555;
+    color: #FFFFFF;
+}
+
+#cv_success
+{
+	
+}
