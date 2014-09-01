@@ -4,10 +4,10 @@
 
 package com.dashboard.utils;
 
-import org.jclouds.compute.ComputeService;
-import org.jclouds.compute.ComputeServiceContext;
+import org.openstack4j.api.compute.ComputeService;
+
 
 public class Connection {
 	public ComputeService compute;
-	public ComputeServiceContext context;
+	//public ComputeServiceContext context;
 }
