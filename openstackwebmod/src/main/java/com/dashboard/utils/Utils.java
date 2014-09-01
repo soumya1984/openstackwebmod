@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openstack4j.api.OSClient;
 import org.openstack4j.api.compute.ComputeService;
 import org.openstack4j.model.compute.Image;
 
@@ -36,7 +37,26 @@ public class Utils {
 		}
 		return computeService;
 	}
-
+	/**
+	 * @param username
+	 *            - Username for openstack Account
+	 * @param password
+	 *            - Password for openstack Account
+	 * @param provider
+	 *            - Cloud Service Provider
+	 * @param tenantName
+	 *            - tenentname of the openstack account
+	 * @returns the connection Object on successful authentication
+	 */
+	public static OSClient getOSClient(String username, String password,
+			String provider, String tenantName) {
+		OSClient osClient = null;
+		if (provider.trim().equalsIgnoreCase("openstack")) {
+			osClient = OpenstackUtils.getOSClient(username, password,
+					tenantName);
+		}
+		return osClient;
+	}
 	/**
 	 * @param provider
 	 *            - Cloud Service Provider
