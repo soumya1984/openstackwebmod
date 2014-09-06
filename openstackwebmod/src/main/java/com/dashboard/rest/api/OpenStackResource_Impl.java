@@ -129,7 +129,7 @@ public class OpenStackResource_Impl extends Application {
 		
 		System.out.println(requestlist.getRequest().size());
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		return Response.created(builder.build()).status(200)
+		return Response.created(builder.build()).status(201)
 				.entity(new Gson().toJson(response)).build();
 	}
 

@@ -12,6 +12,7 @@ import org.openstack4j.api.compute.ComputeService;
 import org.openstack4j.model.compute.Image;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
+import org.openstack4j.model.network.Network;
 import org.openstack4j.openstack.OSFactory;
 
 import com.dashboard.domain.objects.ServerList;
@@ -121,18 +122,22 @@ public class OpenstackUtils {
 	public  List<com.dashboard.domain.objects.Server> buildServers(
 			List<CreateServerRequest> list, String username, String password,
 			String tenantName) {
+		OSClient os = getOSClient(username, password, tenantName);
+		//get the list of the N/W......and use it in Round Robin Fashion 
+		List<? extends Network> networks = os.networking().network().list();
+		List<String> networkIdList = getNetworkIdList(networks);
+		//int count=0;
+		
+		
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
 		for (CreateServerRequest request : list) {
 			// Create a Server Model Object
-			List<String> network = new ArrayList<String>();
-			network.add("3d6eaa35-56d1-46d7-9060-1f2736d0b670");
-			OSClient os = getOSClient(username, password, tenantName);
 			ServerCreate sc = Builders
 					.server()
 					.name(request.getServername())
 					.flavor(request.getFlavour())
 					.image(request.getImageName())
-					.networks(network)
+					.networks(networkIdList)
 					.build();
 			// Boot the Server
 			Server server = os.compute().servers().boot(sc);
@@ -144,34 +149,19 @@ public class OpenstackUtils {
 
 	}
 
+	private List<String> getNetworkIdList(List<? extends Network> networks) {
+		List<String> networkList = new ArrayList<String>();
+		for (Network nwtwrk : networks) {
+			networkList.add(nwtwrk.getId());
+		}
+		return networkList;
+	}
+
 	public com.dashboard.domain.objects.Server getCustomServer(Server server) {
 		com.dashboard.domain.objects.Server customServ = new com.dashboard.domain.objects.Server();
-		customServ.setAccessIPv4(server.getAccessIPv4());
-		customServ.setAccessIPv6(server.getAccessIPv6());
-		customServ.setCreated(server.getCreated());
-		customServ.setHostId(server.getHostId());
 		customServ.setId(server.getId());
-		customServ.setKeyName(server.getKeyName());
 		customServ.setName(server.getName());
 		customServ.setProgress(server.getProgress());
-		//customServ.setStatus(server.getStatus().name());
-		customServ.setTenantId(server.getTenantId());
-		customServ.setUpdated(server.getUpdated());
-		customServ.setUserId(server.getUserId());
-		// custom
-		// Flavor..===================================================
-		com.dashboard.domain.objects.Flavor flavor = new com.dashboard.domain.objects.Flavor(
-				server.getFlavor().getId(), server.getFlavor().getName());
-		customServ.setFlavor(flavor);
-		// /=================================================================
-		customServ.setAccessIPv4(server.getAccessIPv6());
-		customServ.setAccessIPv4(server.getAccessIPv6());
-		// Image
-		// .........====================================================
-		Image novaImage = server.getImage();
-		com.dashboard.domain.objects.Image image = new com.dashboard.domain.objects.Image(
-				novaImage.getName(), novaImage.getId());
-		customServ.setImage(image);
 		return customServ;
 	}
 }
