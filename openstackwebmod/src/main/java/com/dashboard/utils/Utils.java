@@ -14,6 +14,7 @@ import org.openstack4j.model.compute.Image;
 
 import com.dashboard.domain.objects.ServerList;
 import com.dashboard.openstack.utils.OpenstackUtils;
+import com.dashboard.rest.request.bean.CreateServerRequest;
 
 public class Utils {
 
@@ -37,6 +38,7 @@ public class Utils {
 		}
 		return computeService;
 	}
+
 	/**
 	 * @param username
 	 *            - Username for openstack Account
@@ -57,6 +59,7 @@ public class Utils {
 		}
 		return osClient;
 	}
+
 	/**
 	 * @param provider
 	 *            - Cloud Service Provider
@@ -87,4 +90,21 @@ public class Utils {
 		}
 		return serverList;
 	}
+
+	/**
+	 * 
+	 * @param provider
+	 * @param compute
+	 * @return
+	 */
+	public  List<com.dashboard.domain.objects.Server> createServers(List<CreateServerRequest> list,String provider,String username, String password,
+			String tenantName) {
+		List<com.dashboard.domain.objects.Server> serversList=null;
+		if (provider.trim().equalsIgnoreCase("openstack")) {
+			OpenstackUtils util = new OpenstackUtils();
+			serversList = util.buildServers(list, username, password, tenantName);
+		}
+		return serversList;
+	}
+	
 }

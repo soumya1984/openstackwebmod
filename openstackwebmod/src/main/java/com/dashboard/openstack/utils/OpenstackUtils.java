@@ -6,13 +6,16 @@ package com.dashboard.openstack.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.api.compute.ComputeService;
 import org.openstack4j.model.compute.Image;
 import org.openstack4j.model.compute.Server;
+import org.openstack4j.model.compute.ServerCreate;
 import org.openstack4j.openstack.OSFactory;
 
 import com.dashboard.domain.objects.ServerList;
+import com.dashboard.rest.request.bean.CreateServerRequest;
 
 public class OpenstackUtils {
 
@@ -50,7 +53,7 @@ public class OpenstackUtils {
 			String tenantName) {
 		OSClient os = OSFactory.builder()
 				.endpoint("http://localhost:5000/v2.0")
-				.credentials("admin", password).tenantName("admin")
+				.credentials(username, password).tenantName(tenantName)
 				.authenticate();
 		return os;
 	}
@@ -115,4 +118,59 @@ public class OpenstackUtils {
 
 	}
 
+	public  List<com.dashboard.domain.objects.Server> buildServers(
+			List<CreateServerRequest> list, String username, String password,
+			String tenantName) {
+		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
+		for (CreateServerRequest request : list) {
+			// Create a Server Model Object
+			OSClient os = getOSClient(username, password, tenantName);
+			ServerCreate sc = Builders
+					.server()
+					.name(request.getServername())
+					.flavor(request.getFlavour())
+					.image(request.getImageName())
+					.addPersonality("/etc/motd",
+							"Welcome to the new VM! Restricted access only")
+					.build();
+			// Boot the Server
+			Server server = os.compute().servers().boot(sc);
+			// mapping between customresponse & server response
+			com.dashboard.domain.objects.Server customServerRes = getCustomServer(server);
+			servers.add(customServerRes);
+		}
+		return servers;
+
+	}
+
+	public com.dashboard.domain.objects.Server getCustomServer(Server server) {
+		com.dashboard.domain.objects.Server customServ = new com.dashboard.domain.objects.Server();
+		customServ.setAccessIPv4(server.getAccessIPv4());
+		customServ.setAccessIPv6(server.getAccessIPv6());
+		customServ.setCreated(server.getCreated());
+		customServ.setHostId(server.getHostId());
+		customServ.setId(server.getId());
+		customServ.setKeyName(server.getKeyName());
+		customServ.setName(server.getName());
+		customServ.setProgress(server.getProgress());
+		customServ.setStatus(server.getStatus().name());
+		customServ.setTenantId(server.getTenantId());
+		customServ.setUpdated(server.getUpdated());
+		customServ.setUserId(server.getUserId());
+		// custom
+		// Flavor..===================================================
+		com.dashboard.domain.objects.Flavor flavor = new com.dashboard.domain.objects.Flavor(
+				server.getFlavor().getId(), server.getFlavor().getName());
+		customServ.setFlavor(flavor);
+		// /=================================================================
+		customServ.setAccessIPv4(server.getAccessIPv6());
+		customServ.setAccessIPv4(server.getAccessIPv6());
+		// Image
+		// .........====================================================
+		Image novaImage = server.getImage();
+		com.dashboard.domain.objects.Image image = new com.dashboard.domain.objects.Image(
+				novaImage.getName(), novaImage.getId());
+		customServ.setImage(image);
+		return customServ;
+	}
 }
