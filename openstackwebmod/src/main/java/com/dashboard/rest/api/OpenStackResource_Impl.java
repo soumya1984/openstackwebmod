@@ -42,17 +42,8 @@ public class OpenStackResource_Impl extends Application {
 		String password = pass;
 		String provider = Constants.provider;
 		String tenantName = tenentId;
-		// Authenticate user
-		// =========================================================
-		// call rest API ....
-		// RestClientUtil util = new RestClientUtil();
-		// AuthResponse authRes = util.getToken(username, password);
-		// String jsonString = new Gson().toJson(authRes);
-		// System.out.println(jsonString);
-		// ==============================================================================
 		ComputeService computeService = Utils.authenticate(username, password,
 				provider, tenantName);
-
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		return Response.created(builder.build()).status(200).build();
 	}
