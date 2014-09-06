@@ -22,7 +22,6 @@ import org.openstack4j.model.identity.User;
 
 import com.dashboard.domain.objects.ServerList;
 import com.dashboard.openstack.utils.Constants;
-import com.dashboard.rest.request.bean.CreateServerRequest;
 import com.dashboard.rest.request.bean.CreateServerRequestList;
 import com.dashboard.utils.Connection;
 import com.dashboard.utils.Utils;
