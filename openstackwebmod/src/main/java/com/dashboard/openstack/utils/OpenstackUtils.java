@@ -124,14 +124,15 @@ public class OpenstackUtils {
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
 		for (CreateServerRequest request : list) {
 			// Create a Server Model Object
+			List<String> network = new ArrayList<String>();
+			network.add("3d6eaa35-56d1-46d7-9060-1f2736d0b670");
 			OSClient os = getOSClient(username, password, tenantName);
 			ServerCreate sc = Builders
 					.server()
 					.name(request.getServername())
 					.flavor(request.getFlavour())
 					.image(request.getImageName())
-					.addPersonality("/etc/motd",
-							"Welcome to the new VM! Restricted access only")
+					.networks(network)
 					.build();
 			// Boot the Server
 			Server server = os.compute().servers().boot(sc);
@@ -153,7 +154,7 @@ public class OpenstackUtils {
 		customServ.setKeyName(server.getKeyName());
 		customServ.setName(server.getName());
 		customServ.setProgress(server.getProgress());
-		customServ.setStatus(server.getStatus().name());
+		//customServ.setStatus(server.getStatus().name());
 		customServ.setTenantId(server.getTenantId());
 		customServ.setUpdated(server.getUpdated());
 		customServ.setUserId(server.getUserId());
