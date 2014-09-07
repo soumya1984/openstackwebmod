@@ -30,7 +30,7 @@
       $("#navlist").clone(true).appendTo("#header-navbar");
       // This cloning seems to drop some of the href links unless I refresh and reload the initial tab
       $("#pageone-tabs").tabs("refresh");
-      $("#pageone-tabs").tabs("load",0);
+      //$("#pageone-tabs").tabs("load",0);
       $("#header-navbar").navbar();
       //$("#nav").remove();
       screen="mobile";
@@ -48,8 +48,8 @@
     } else {
       console.log("Screen type already big");
       $("#pageone-tabs").create
-      $("#pageone-tabs").tabs("refresh");
-      $("#pageone-tabs").tabs("load",0);
+      //$("#pageone-tabs").tabs("refresh");
+      //$("#pageone-tabs").tabs("load",0);
     }
   }
   
@@ -249,7 +249,8 @@
 
     	$(window).trigger('resize');
   
-         
+	$("#active-inst-button").click()
+	
       function passFunction() {
         alert("Not defined yet");
       }
