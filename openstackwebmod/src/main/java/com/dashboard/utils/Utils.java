@@ -82,7 +82,7 @@ public class Utils {
 	 *            - ComputeService Object
 	 * @returns map of Images
 	 */
-	public static ServerList getServerList(String provider,
+	public  ServerList getServerList(String provider,
 			ComputeService compute) {
 		ServerList serverList = null;
 		if (provider.trim().equalsIgnoreCase("openstack")) {

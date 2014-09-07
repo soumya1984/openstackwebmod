@@ -1,0 +1,18 @@
+[{
+"name" : "my_instance_1",
+"id" : "some UUID",
+"status" : "Running",
+"uptime" : "1h 3min",
+"os" : "CEntOS 7.1",
+"cpu_usage_percent" : "70",
+"icon" : "/os_icon?id=uuid"
+},
+{
+"name" : "my_instance_2",
+"id" : "some UUID2",
+"status" : "Paused",
+"uptime" : "1h 3min",
+"os" : "CEntOS 7.1",
+"cpu_usage_percent" : "0",
+"icon" : "/os_icon?id=uuid2"
+}]

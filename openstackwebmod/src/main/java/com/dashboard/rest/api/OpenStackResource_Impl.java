@@ -1,9 +1,13 @@
 package com.dashboard.rest.api;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,6 +26,7 @@ import org.openstack4j.model.identity.User;
 
 import com.dashboard.domain.objects.ServerList;
 import com.dashboard.openstack.utils.Constants;
+import com.dashboard.openstack.utils.OpenstackUtils;
 import com.dashboard.rest.request.bean.CreateServerRequestList;
 import com.dashboard.utils.Connection;
 import com.dashboard.utils.Utils;
@@ -29,61 +34,98 @@ import com.google.gson.Gson;
 
 @Path("/openstack")
 public class OpenStackResource_Impl extends Application {
+
+	private static final String OC_CLIENT_OBJ = "__OS_CLIENT_OBJ";
+	private static final String OC_COMPUTE_OBJ = "__OS_COMPUTE_OBJ";
+	private static final String USER_NAME = "__USER_NAME__";
+	private static final String PASSWORD = "__PASS__";
+	private static final String TENANT = "__TENANT__";
+
+	private void log(String message) {
+		System.out.println("APPLOG:" + message);
+	}
+
+	private Object _getObjectFromSession(String name) {
+		HttpSession session = request.getSession();
+		if (session != null && session.getAttribute(name) != null) {
+			return session.getAttribute(name);
+		}
+		return null;
+	}
+
+	private OSClient _authFromSession() {
+		String u = (String) _getObjectFromSession(USER_NAME);
+		String p = (String) _getObjectFromSession(PASSWORD);
+		String t = (String) _getObjectFromSession(TENANT);
+		if (u != null && p != null && t != null) {
+			return OpenstackUtils.getOSClient(u, p, t);
+		}
+		return null;
+	}
+
+	// Connection connection = null;
+	@Context
+	private HttpServletRequest request;
 	Connection connection = null;
 
-	@GET
-	@Path("/dashboard")
-	@Produces("application/json")
-	public Response getDahBOard(@QueryParam("userid") String userId,
-			@QueryParam("password") String pass,
-			@QueryParam("tenetId") String tenentId, @Context UriInfo uriInfo) {
-		// check authentication...
-		String username = userId;
-		String password = pass;
-		String provider = Constants.provider;
-		String tenantName = tenentId;
-		ComputeService computeService = Utils.authenticate(username, password,
-				provider, tenantName);
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		return Response.created(builder.build()).status(200).build();
+	@POST
+	@Path("/login")
+	// @Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.APPLICATION_XML})
+	// @Produces("application/json")
+	public Response getDahBOard(@FormParam("username") String username,
+			@FormParam("password") String password) {
+		try {
+			HttpSession session = request.getSession();
+			if (session != null) {
+				session.invalidate();
+			}
+			OSClient osc = OpenstackUtils.getOSClient(username, password,
+					"admin");
+			ComputeService cs = osc.compute();
+
+			session = request.getSession(true);
+			session.setAttribute(OC_CLIENT_OBJ, osc);
+			session.setAttribute(OC_COMPUTE_OBJ, osc.compute());
+			session.setAttribute(USER_NAME, username);
+			session.setAttribute(PASSWORD, password);
+			session.setAttribute(TENANT, "admin");
+
+			return Response
+					.temporaryRedirect(
+							new URI(
+									"http://localhost:8080/openstackwebmod/dashboard.html"))
+					.build();
+		} catch (Exception e) {
+			return Response.status(401).build();
+		}
 	}
 
 	@GET
 	@Path("/serverDetails")
 	@Produces("application/json")
-	public Response getServerDetails(@QueryParam("userid") String userId,
-			@QueryParam("password") String pass,
-			@QueryParam("tenetId") String tenentId, @Context UriInfo uriInfo) {
-		// check authentication...
-		String username = userId;
-		String password = pass;
+	public Response getServerDetails(@Context UriInfo uriInfo) {
 		String provider = Constants.provider;
-		String tenantName = tenentId;
 		Utils utils = new Utils();
-		ComputeService computeService = Utils.authenticate(username, password,
-				provider, tenantName);
-		// Get the list of images
-		ServerList serverlist = utils.getServerList(provider, computeService);
-		String resonse = new Gson().toJson(serverlist);
-		System.out.println(resonse);
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		return Response.created(builder.build()).status(200).entity(resonse)
-				.build();
+		OSClient osc = _authFromSession();
+		if (osc != null) {
+			// Get the list of images
+			ServerList serverlist = utils
+					.getServerList(provider, osc.compute());
+			String resonse = new Gson().toJson(serverlist);
+			System.out.println(resonse);
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			return Response.created(builder.build()).status(200)
+					.entity(resonse).build();
+		} else {
+			return Response.status(401).build();
+		}
 	}
 
 	@GET
 	@Path("/users")
 	@Produces("application/json")
-	public Response getUserDetails(@QueryParam("userid") String userId,
-			@QueryParam("password") String pass,
-			@QueryParam("tenetId") String tenentId, @Context UriInfo uriInfo) {
-		// check authentication...
-		String username = userId;
-		String password = pass;
-		String provider = Constants.provider;
-		String tenantName = tenentId;
-		OSClient osclient = Utils.getOSClient(username, password, provider,
-				tenantName);
+	public Response getUserDetails(@Context UriInfo uriInfo) {
+		OSClient osclient = _authFromSession();
 		// Find all Users
 		List<? extends User> opnstackUsers = osclient.identity().users().list();
 		ArrayList<com.dashboard.domain.objects.User> userList = new ArrayList<com.dashboard.domain.objects.User>();
@@ -113,10 +155,11 @@ public class OpenStackResource_Impl extends Application {
 		String password = pass;
 		String provider = Constants.provider;
 		String tenantName = tenentId;
-		List<com.dashboard.domain.objects.Server> servers =utils.createServers(requestlist.getRequest(), provider, username,
-				password, tenantName);
-	    String response= new Gson().toJson(servers);
-		
+		List<com.dashboard.domain.objects.Server> servers = utils
+				.createServers(requestlist.getRequest(), provider, username,
+						password, tenantName);
+		String response = new Gson().toJson(servers);
+
 		System.out.println(requestlist.getRequest().size());
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		return Response.created(builder.build()).status(201)

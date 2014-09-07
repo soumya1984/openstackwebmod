@@ -1,0 +1,211 @@
+
+.vm_list thead th {
+  border-bottom: 2px solid rgba(255, 255, 255, .1);
+}
+
+.vm_list tbody th,
+.vm_list tbody td {
+  border-bottom: 2px solid rgba(255, 255, 255, .1);
+  text-align: center;
+}
+
+/* Add alternating row stripes */
+.vm_list tbody tr:nth-child(odd) td,
+.vm_list tbody tr:nth-child(odd) th {
+  background-color: rgba(160,160,160,.2);
+}
+
+.divh_cust h1 {
+  font-size: 40px;
+}
+
+.left {
+  position:relative;
+  float:left;
+  width:80%;
+}
+
+.right {
+  position:fixed;
+  right:0;
+  top:0;
+  width:20%;
+  height:100%;
+}
+
+#cr-title {
+  text-align:center;
+}
+
+#create-insts {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#active-vms {
+  margin-left: auto;
+  margin-right: auto;
+  width:75%;
+}
+
+
+#nav {
+  width:90%;
+}
+
+#login-container {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#pwd-label{
+   color:black;
+   font:bold;
+}
+
+#user-label{
+  color:black;
+  font:bold;
+ }
+
+#header-title {
+  width:100%;
+  font-size:28px;
+  margin-left:auto;
+  margin-right:auto;
+  color:white;
+}
+
+#login-buttons {
+  margin-left:auto;
+  margin-right:auto;
+  width:100%
+}
+
+#pageone-header {
+  position:relative;
+  left:0;
+  top:0;
+  width:80%;
+  margin-right:auto;
+}
+
+#pageone-title {
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+}
+
+#pageone-footer {
+  position:absolute;
+  bottom:0;
+  float:left;
+  width:80%;
+}
+
+#openstack-badge {
+  position: relative;
+  left: 10%;
+  width: auto;
+}
+
+#navigation {
+  width:90%;
+}
+
+@media all and (max-width: 40em) {
+
+  .my-breakpoint .ui-block-a, 
+  .my-breakpoint .ui-block-b, 
+  .my-breakpoint .ui-block-c,
+  .my-breakpoint .ui-block-d,
+  .my-breakpoint .ui-block-e { 
+    width: 100%; 
+    float:none; 
+  }
+  
+  .left {
+    width:100%;
+  }
+  
+  .right {
+    width:0%;
+  }
+  
+  #right-nav {
+    display:none;
+  }
+
+  #pageone-header {
+    position:relative;
+    left:0;
+    top:0;
+    width:100%;
+    margin-right:auto;
+  }
+
+  #pageone-title {
+    margin-left:auto;
+    margin-right:auto;
+    width:99%;
+  }
+
+  #pageone-footer {
+    position:absolute;
+    bottom:0;
+    float:left;
+    width:100%;
+  }
+  
+  #pageone-navbar {
+    visibility: visible;
+  }
+  
+  #header-title{
+    font-size:24px;
+  }
+  
+  #login-container {
+   width: 100%;
+  }
+  
+  #username-container #password-container #username #password {
+    width:100%;
+  }
+  
+  #login-buttons {
+    width:100%;
+  }
+
+  #active-vms {
+    margin-left: auto;
+    margin-right: auto;
+    width:95%;
+  }
+
+
+
+}
+ 
+#main-content {
+  background-image: url("http://www.pixeden.com/media/k2/galleries/189/004-clouds-set-collection-vector-sky.jpg");
+}
+
+#email {
+  position:absolute;
+  bottom:10%;
+  left:10%;
+  width:80%;
+  margin-bottom:10px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+/*Use for debug
+div {
+    border: 1px solid #000;
+}
+*/
