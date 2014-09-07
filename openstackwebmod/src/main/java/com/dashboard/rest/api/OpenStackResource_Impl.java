@@ -70,8 +70,7 @@ public class OpenStackResource_Impl extends Application {
 
 	@POST
 	@Path("/login")
-	// @Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.APPLICATION_XML})
-	// @Produces("application/json")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.MULTIPART_FORM_DATA})
 	public Response getDahBOard(@FormParam("username") String username,
 			@FormParam("password") String password) {
 		try {
