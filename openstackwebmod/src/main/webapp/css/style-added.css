@@ -33,22 +33,43 @@
   height:100%;
 }
 
-#cr-title {
-  text-align:center;
-}
-
-#create-insts {
+.cr-content {
   width:50%;
   margin-left:auto;
   margin-right:auto;
 }
 
-#active-vms {
-  margin-left: auto;
-  margin-right: auto;
-  width:75%;
+.bill-content {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
 }
 
+/* Set width and center the Running Insts Tab */
+#ui-tabs-1 {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Same as above, for Create Insts tab */
+#ui-tabs-2 {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#cr-title {
+  text-align:center;
+}
+
+#billing-title {
+  text-align:center;
+}
+
+#bill-table {
+  width:100%;
+}
 
 #nav {
   width:90%;
