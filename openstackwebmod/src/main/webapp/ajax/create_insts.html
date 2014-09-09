@@ -3,6 +3,7 @@
     
     $(function() {
         $("#service-create").hide();
+        console.log("Loading page "+$("#serve-name").val())
     });
     
     $("form input:radio").change(function () {
@@ -276,11 +277,11 @@
             $("#serve-spin").val(5) ;
         }
         
-});
+    });
     
 </script>
 
-<div data-role="content" class="ui-content left">
+<div data-role="content" class="cr-content">
     <div id="create-title">
         <h1 id="cr-title">Create New VMs and Services</h1>
     </div>
@@ -325,23 +326,28 @@
                         
                 </div>
                 
-                <div id="service-create" data-role="fieldcontain" class="ui-hidden">
-                    <label for="serve-name">Instance Prefix:</label>
+                <div id="service-create" data-role="fieldcontain">
+                    <label for="serve-name">Instance Prefix:
                     <input type="text" name="serve-name" id="serve-name" value="" />
+                    </label>
                 
-                    <label for="serve-type" class="select">Select a Service:</label>
+                    <label for="serve-type" class="select">Select a Service:
                     <select name="serve-type" id="serve-type">
                         <option value="SmallApp">Small Application</option>
                         <option value="WebSite">Web Site</option>
                         <option value="LargeWebSite">Large Web Site</option>
                         <option value="EnterpriseCloud">Enterprise Cloud</option>
                     </select>
+                    </label>
                         
-                    <label for="serve-spin">Number of VMs Created:</label>
-                    <input id="serve-spin" type="number" min="0" max="5" value="1" name="serve-spin" readonly>
+                    <label for="serve-spin">Number of VMs Created:
+                    <input id="serve-spin" type="number" min="0" max="5" value="1" name="serve-spin" readonly />
+                    </label>
                         
-                    <label for="serve-scale">Auto-Scale:</label>
+                    <label for="serve-scale">Auto-Scale:
                     <input type="checkbox" name="serve-scale" id="serve-scale" value="" />
+                    </label>
+                    
                 </div>
                     
                 <div id="create-buttons" data-role="fieldcontain" class="ui-grid-a ui-responsive my-breakpoint">
