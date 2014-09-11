@@ -12,7 +12,7 @@
         var error_name = "<div id=\"errname\" ><font color=\"red\">Error: Instance Name must start with a letter and be non-empty.</font></div>";
                 
         //var request = {"request":[{"servername":"MY VM 3","imageName":"CMPE-MINI","flavour":"m1.tiny"},{"servername":"MY VM 4","imageName":"CMPE-MINI","flavour":"m1.tiny"}]};
-        var url = "rest/create_insts";
+        var url = "rest/openstack/createServers";
        
        /* 
         $.post(
@@ -50,9 +50,12 @@
             if (! ($("#errspin").length > 0 || $("#errname").length > 0) ) {  // if we've made it this far without an error
                 //alert("Made it to this spot.. now to make a request...");
                 var instname = $("#vm-name").val();
-                var flavor = $("#vm-flavor").val();
-                var image = $("#vm-image").val();
+                //var flavor = $("#vm-flavor").val();
+                //var image = $("#vm-image").val();
+                var flavor = "m1.tiny";
+                var image = "CMPE-MINI";
                 var vmnum = $("#num-insts").val();
+                
                 var req = {
                     request:[]
                 };
@@ -65,17 +68,9 @@
                         req.request[req.request.length] = tempreq;
                         // Send request to REST and change back to main tab
                         // if this doesn't work, try $.ajax for more options
-                        /*$.post(
-                            url,
-                            req,
-                            function (data, status) {
-                                console("Data from the server is "+data);
-                                console("Status returned was "+status);
-                            });
-                        */
-                    }
-                    $("#active-inst-button").click();
                         
+                    }
+                                            
                 } else {
                     tempreq = Object.create(vmreq);
                     tempreq["serverName"] = instname;
@@ -92,23 +87,49 @@
                                 console("Status returned was "+status);
                             });
                         */
-                    $("#active-inst-button").click();
-                    
                 }
+                
+                alert(JSON.stringify(req));
+                $.ajax({
+	                type: "POST",
+	                url: url,
+	                data: req,
+	                contentType: "application/json; charset=utf-8",
+	                dataType: "json",
+	                success: function (data, status, jqXHR) {
+	                    console.log("success");// write success in " "
+	                },
+	                error: function (jqXHR, status) {
+	                    // error handler
+	                    console.log(jqXHR);
+	                    console.log('fail' + status.code);
+	                }
+                });
+           
+                            
+                $("#active-inst-button").click();
             }
         } // if mode is service, validate prefix and send the service type to the createService function
         else if($('input:radio("name==radio_choice"):checked').val() == "Services") {
             request = createService();
-            // Send request to REST and change back to main tab
-                    /*$.post(
-                            url,
-                            request,
-                            function (data, status) {
-                                console("Data from the server is "+data);
-                                console("Status returned was "+status);
-                            });
-                        */
-            //console.log(JSON.stringify(request));
+      
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: request,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, status, jqXHR) {
+                    console.log("success");// write success in " "
+                },
+                error: function (jqXHR, status) {
+                    // error handler
+                    console.log(jqXHR);
+                    console.log('fail' + status.code);
+                }
+            });
+            
+            console.log(JSON.stringify(request));
             $("#active-inst-button").click();
         }
     }
@@ -152,7 +173,7 @@
             request:[]
         };
               
-        if ($("#serve-type option:selected").val() =="SmallApplication") {
+        if ($("#serve-type option:selected").val() =="SmallApp") {
             tempreq = Object.create(vmreq);
 
             tempreq["serverName"] = instname;
@@ -231,7 +252,6 @@
             req.request[4] = tempreq;        
 
         }
-        
         return req;
 
     }
