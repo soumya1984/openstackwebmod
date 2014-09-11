@@ -4,15 +4,16 @@
     <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
  
- <link rel="stylesheet" href="./css/custom-theme-a.css">
- <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css">
+ <link rel="stylesheet" href="./css/custom-theme-a.css" />
+ <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
  
  <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.3.min.css" />
  <link rel="stylesheet" type="text/css" href="./css/style-added.css" />
-  
- <script src="javascript/jquery-1.11.1.min.js"></script>
+     
+ <script src="javascript/jquery-2.1.1.min.js"></script>
  <script src="javascript/jquery.mobile-1.4.3.min.js"></script>
- 
+
+ <script src="javascript/create_insts_funcs.js"></script>
  <script>     
  
    var screen="big";
@@ -74,28 +75,28 @@
 	</div> -->
       </div>
     
-      <div data-role"main" id="pageone-main">
+  <div class="main" id="pageone-main">
 	<div id="right-nav" class="right">
 	  <p id="openstack-badge">
 	    <img src=resources/download-openstack-badge.png>
 	  </p>
   
-	  <div data-role="nav" id="nav">
-	    <ul id="navlist">
-	      <li><a href="rest/openstack/serverDetails" id="active-inst-button" data-role="button">Active VMs</a></li>
-	      <li><a href="/ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
-	      <li><a href="/ajax/account.html" id="account-button" data-role="button">Account</a></li>
-	    </ul>
-	  </div>
-	  
-	  <div id="email">
-	    <span>Contact:<br></span>
-	    <span class="email" id="email1"><a href=ocbrewing@gmail.com>Jason Rogers</a></span><br>
-	    <span class="email" id="email2"><a href=blah@blah.gmail.com>Jijo Xavier</a></span><br>
-	    <span class="email" id="email3"><a href=hugh@gmail.com>Hugh Ma</a></span><br>
-	    <span class="email" id="email4"><a href=sweer@gmail.com>Sweer Kaul</a></span><br>
-	    <span class="email" id="email5"><a href=soumya@gmail.com>Soumya Acharya</a></span><br>
-	  </div>
+		<div data-role="nav" id="nav">
+		    <ul id="navlist">
+		      <li><a href="rest/openstack/serverDetails" id="active-inst-button" data-role="button">Active VMs</a></li>
+		      <li><a href="./ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
+		      <li><a href="./ajax/account.html" id="account-button" data-role="button">Account</a></li>
+		    </ul>
+		</div>
+		  
+		<div id="email">
+		    <span>Contact:<br></span>
+		    <span class="email" id="email1"><a href=ocbrewing@gmail.com>Jason Rogers</a></span><br>
+		    <span class="email" id="email2"><a href=blah@blah.gmail.com>Jijo Xavier</a></span><br>
+		    <span class="email" id="email3"><a href=hugh@gmail.com>Hugh Ma</a></span><br>
+		    <span class="email" id="email4"><a href=sweer@gmail.com>Sweer Kaul</a></span><br>
+		    <span class="email" id="email5"><a href=soumya@gmail.com>Soumya Acharya</a></span><br>
+		</div>
 	</div> <!-- End of Right Nav -->
 	
 
@@ -106,7 +107,7 @@
 
 	  <div id="ui-tabs-2" class="ui-content left"></div>
 
-	  <div id="ui-tabs-3" class="ui-content"></div>   <!-- End of Account Tab -->
+	  <div id="ui-tabs-3" class="ui-content"></div>
 	    
 	</div>   <!-- End of left main content for tab display -->
       
@@ -119,17 +120,17 @@
   </div>  <!-- End of Page -->
   
   <script>
-    var dom_test = "Testing The Scope of a Dialog";        
+    //var dom_test = "Testing The Scope of a Dialog";        
     $("#pageone-tabs").tabs({
           create: function(event, ui) {
 	    console.log("Creation called");
 	  },
 	  beforeLoad: function(event, ui) {
-            var url = ui.ajaxSettings.url;
+        var url = ui.ajaxSettings.url;
 	    var table_html = "<table id=\"dynamic-table\" class=\"vm_list ui-responsive\" data-role=\"table\">";
 	    var table_head = "<thead>";
 	    var table_body = "<tbody>";
-	    if (true) {
+	    if (url=="rest/openstack/serverDetails") {
 	      console.log("Need to load and parse JSON");
 	      console.log(ui.ajaxSettings);
 /* 	      $.getJSON(url, function(data) {
