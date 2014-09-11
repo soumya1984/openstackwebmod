@@ -3,22 +3,23 @@
   <head>
     <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
  <link rel="stylesheet" href="./css/custom-theme-a.css" />
- <link rel="stylesheet" href="./css/jquery.mobile.icons.min" />
+ <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
  
- 
- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
- <link rel="stylesheet" type="text/css" href="./css/style-added.css" />   
-<!--  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
- <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+ <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.3.min.css" />
+ <link rel="stylesheet" type="text/css" href="./css/style-added.css" />
+  
+ <script src="javascript/jquery-2.1.1.min.js"></script>
+ <script src="javascript/jquery.mobile-1.4.3.min.js"></script>
  
  <script>
   var username="admin";
   var tenantname="admin";
-  var password="01ff16bf4cbb4020";
+  var password="14d8ae412ca24325";
  
  
-  $(function() {
+  $(document).ready(function() {
     $("#username").val(username);
     $("#password").val(password);
   });
@@ -35,23 +36,23 @@
 	
 	<div data-role="main" class="ui-content" id="main-content">
 	  <div class="ui-field-contain" id="login-container">
-	    <form name="login-frm" action="rest/openstack/login" method="POST">
-	      <div class="ui-field-contain my-breakpoint" id="username-container">
-		<label for="username" id="user-label">Username:</label>
-		<input name="username" type="text" id="username" value="" placeholder="Username..">
+	    <form name="login-frm" data-ajax="false" action="rest/openstack/login" method="post">
+	      <div id="username-container" data-role="fieldcontain">
+			<label for="username">Username:</label>
+			<input name="username" type="text" id="username" value="" placeholder="Username.." />
 	      </div>
-	      <div class="ui-field-contain my-breakpoint" id="password-container">
-		<label for="password" id="pwd-label">Password:</label>
-		<input name="password" type="password" id="password" value="" placeholder="Password..">
+	      <div id="password-container" data-role="fieldcontain">
+			<label for="password">Password:</label>
+			<input name="password" type="password" id="password" value="" placeholder="Password.." />
 	      </div>
-	      <div id="login-buttons" class="ui-grid-a ui-responsive my-breakpoint">
-		  <div class="ui-block-a">
-		  <input type="submit" data-role="button" id="login-submit" value="Login">
-		  </div>
-		  <div class="ui-block-b">
+	      <div id="login-buttons" class="ui-grid-a">
+		  	 <div class="ui-block-a">
+		  		<input type="submit" data-role="button" id="login-submit" value="Login" />
+		 	 </div>
+		  	 <div class="ui-block-b">
 	          <input type="reset" data-role="button"  id="login-reset" value="Reset">
-		  </div>
-	      </div>
+		  	 </div>
+	     </div>
 	    </form>
 	  </div>
 	</div>
