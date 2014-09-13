@@ -97,12 +97,11 @@ public class Utils {
 	 * @param compute
 	 * @return
 	 */
-	public  List<com.dashboard.domain.objects.Server> createServers(List<CreateServerRequest> list,String provider,String username, String password,
-			String tenantName) {
+	public  List<com.dashboard.domain.objects.Server> createServers(List<CreateServerRequest> list,String provider,OSClient osc) {
 		List<com.dashboard.domain.objects.Server> serversList=null;
 		if (provider.trim().equalsIgnoreCase("openstack")) {
 			OpenstackUtils util = new OpenstackUtils();
-			serversList = util.buildServers(list, username, password, tenantName);
+			serversList = util.buildServers(list,osc);
 		}
 		return serversList;
 	}

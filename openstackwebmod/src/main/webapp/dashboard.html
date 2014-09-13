@@ -15,10 +15,8 @@
  
  <script>     
  
-   var screen="big";
-
-    
  
+ var screen="big";
  $(window).resize(function() {
   // Mobile size
   if (window.matchMedia('(max-width: 40em)').matches) {
@@ -30,7 +28,7 @@
       $("#navlist").clone(true).appendTo("#header-navbar");
       // This cloning seems to drop some of the href links unless I refresh and reload the initial tab
       $("#pageone-tabs").tabs("refresh");
-      //$("#pageone-tabs").tabs("load",0);
+      $("#pageone-tabs").tabs("load",0);
       $("#header-navbar").navbar();
       //$("#nav").remove();
       screen="mobile";
@@ -48,8 +46,8 @@
     } else {
       console.log("Screen type already big");
       $("#pageone-tabs").create
-      //$("#pageone-tabs").tabs("refresh");
-      //$("#pageone-tabs").tabs("load",0);
+      $("#pageone-tabs").tabs("refresh");
+      $("#pageone-tabs").tabs("load",0);
     }
   }
   
@@ -83,7 +81,7 @@
 	  <div data-role="nav" id="nav">
 	    <ul id="navlist">
 	      <li><a href="rest/openstack/serverDetails" id="active-inst-button" data-role="button">Active VMs</a></li>
-	      <li><a href="/ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
+	      <li><a href="ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
 	      <li><a href="#other" data-role="button" id="other-stuff-button" data-ajax="false">Other Features</a></li>
 	    </ul>
 	  </div>
@@ -177,6 +175,8 @@
   </div>  <!-- End of Page -->
   
   <script>
+  //var map = new Object();
+  var html;
     var dom_test = "Testing The Scope of a Dialog";        
     $("#pageone-tabs").tabs({
           create: function(event, ui) {
@@ -187,34 +187,17 @@
 	    var table_html = "<table id=\"dynamic-table\" class=\"vm_list ui-responsive\" data-role=\"table\">";
 	    var table_head = "<thead>";
 	    var table_body = "<tbody>";
-	    if (true) {
+	    html="<html lang=\"en\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">"
+	    	  +"<link rel=\"stylesheet\" type=\"text/css\" href=\"css/customButton.css\">"
+	    	  +"<\/head><body>" ;
+	   // var serverId ;
+	    if (url =="rest/openstack/serverDetails") {
 	      console.log("Need to load and parse JSON");
 	      console.log(ui.ajaxSettings);
-/* 	      $.getJSON(url, function(data) {
-		//nested each - first is the array of json, second is json itself
-		var row_index=0;
-		$.each(data, function(index, value) {
-		  table_body+="<tr>\n"; //form new row for each array index
-		  var counter=1;
-		  $.each(value, function(index2, value2) {
-		    if (index==0) {  //only fill header from first element
-		      table_head+=("<th data-priority=\""+counter+"\">"+index2+"</th>");
-		      counter+=counter;
-		    }
-		    table_body+=("<td>"+value2+"</td>");
-		  });
-		  table_body+="</tr>\n";
-		});
-		table_head+="</thead>";
-		table_body+="</tbody>";
-		table_html=table_html.concat(table_head, table_body, "</table>");
-		//console.log("Full table markup "+table_html);
-		ui.panel.html(table_html);
-		$("#dynamic-table").table();
-		}); */
 		   $.ajax({url:url,success:function(data){
 				//nested each - first is the array of json, second is json itself
 				var row_index=0;
+				var serverID;
 				$.each(data.serverList, function(index, value) {
 				  table_body+="<tr>\n"; //form new row for each array index
 				  var counter=1;
@@ -223,12 +206,40 @@
 				      table_head+=("<th data-priority=\""+counter+"\">"+index2+"</th>");
 				      counter+=counter;
 				    }
-				    table_body+=("<td>"+value2+"</td>");
+				    if(index2 == "id"){
+				    	table_body+=("<td><a href=\"#\" onclick=\"openWindow()\">"+value2+"</a></td>");
+				    	html+=("<div id="+value2+" class=\"container\">");
+				    	html+=("<tr><td><lebel>Server ID:"+value2+"</lebel></td>")
+				    	serverID = value2;
+				    }else if(index2 == "name"){
+				    	table_body+=("<td>"+value2+"</td>");
+				    	html+=("<td><lebel>Server Name:"+value2+"</lebel></td>")
+				    }
+				    else if(index2 == "image"){
+				    	table_body+=("<td>"+"Name:"+value2.imageName+"\n"+"Id:"+value2.id+"</td>");
+				    }else if(index2 == "flavor"){
+				    	table_body+=("<td>"+"Name:"+value2.flavourName+"\n"+"Id:"+value2.flavorId+"</td>");
+				    }else if(index2 == "status"){
+				    	table_body+=("<td>"+value2+"</td>");
+				      if(value2 =="ACTIVE"){
+				    	  html+=("<td><button id="+serverID+"  class=\"button active\">Stop</button></td>");
+				      }
+				      if(value2 =="UNRECOGNIZED"){
+				    	  html+=("<td><button id="+serverID+" class=\"button active\">Start</button></td>");
+				      }
+			    	  html+=("</tr></div>");
+				    }
+				    else{
+				      table_body+=("<td>"+value2+"</td>");
+				    }
+
 				  });
 				  table_body+="</tr>\n";
 				});
 				table_head+="</thead>";
 				table_body+="</tbody>";
+				html+="</body></html>";
+				console.log(html);
 				table_html=table_html.concat(table_head, table_body, "</table>");
 				//console.log("Full table markup "+table_html);
 				ui.panel.html(table_html);
@@ -241,20 +252,15 @@
 	    }
 	  return true;
 	  }
-    });
-	
-	/*$("#ip").append(" "+OS_AUTH_URL);*/
-  
+    }); 
     $(document).ready(function(){
-
     	$(window).trigger('resize');
-  
-	$("#active-inst-button").click()
-	
-      function passFunction() {
-        alert("Not defined yet");
-      }
     });
+    function openWindow(){
+    	//event.preventdefault();
+    	var myWindow = window.open("", "MsgWindow", "width=500, height=500");
+    	myWindow.document.write(html);
+    } 
   </script>
   </body>
 </html>

@@ -120,11 +120,10 @@ public class OpenstackUtils {
 	}
 
 	public  List<com.dashboard.domain.objects.Server> buildServers(
-			List<CreateServerRequest> list, String username, String password,
-			String tenantName) {
-		OSClient os = getOSClient(username, password, tenantName);
+			List<CreateServerRequest> list, OSClient osc) {
+		//OSClient os = getOSClient(username, password, tenantName);
 		//get the list of the N/W......and use it in Round Robin Fashion 
-		List<? extends Network> networks = os.networking().network().list();
+		List<? extends Network> networks = osc.networking().network().list();
 		List<String> networkIdList = getNetworkIdList(networks);
 		//int count=0;
 		
@@ -140,7 +139,7 @@ public class OpenstackUtils {
 					.networks(networkIdList)
 					.build();
 			// Boot the Server
-			Server server = os.compute().servers().boot(sc);
+			Server server = osc.compute().servers().boot(sc);
 			// mapping between customresponse & server response
 			com.dashboard.domain.objects.Server customServerRes = getCustomServer(server);
 			servers.add(customServerRes);

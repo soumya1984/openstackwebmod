@@ -70,7 +70,8 @@ public class OpenStackResource_Impl extends Application {
 
 	@POST
 	@Path("/login")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.MULTIPART_FORM_DATA})
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.MULTIPART_FORM_DATA })
 	public Response getDahBOard(@FormParam("username") String username,
 			@FormParam("password") String password) {
 		try {
@@ -141,28 +142,26 @@ public class OpenStackResource_Impl extends Application {
 	@POST
 	@Path("/createServers")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createServer(String x, @Context UriInfo uriInfo,
-			@QueryParam("userid") String userId,
-			@QueryParam("password") String pass,
-			@QueryParam("tenetId") String tenentId) {
+	//@Consumes(MediaType.APPLICATION_JSON)
+	public Response createServer(String x, @Context UriInfo uriInfo) {
 		System.out.println(x);
 		CreateServerRequestList requestlist = new Gson().fromJson(x,
 				CreateServerRequestList.class);
-		Utils utils = new Utils();
-		String username = userId;
-		String password = pass;
-		String provider = Constants.provider;
-		String tenantName = tenentId;
-		List<com.dashboard.domain.objects.Server> servers = utils
-				.createServers(requestlist.getRequest(), provider, username,
-						password, tenantName);
-		String response = new Gson().toJson(servers);
+		OSClient osc = _authFromSession();
+		if (osc != null) {
+			Utils utils = new Utils();
+			String provider = Constants.provider;
+			List<com.dashboard.domain.objects.Server> servers = utils
+					.createServers(requestlist.getRequest(), provider, osc);
+			String response = new Gson().toJson(servers);
 
-		System.out.println(requestlist.getRequest().size());
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		return Response.created(builder.build()).status(201)
-				.entity(new Gson().toJson(response)).build();
+			System.out.println(requestlist.getRequest().size());
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			return Response.created(builder.build()).status(201)
+					.entity(new Gson().toJson(response)).build();
+		} else {
+			return Response.status(401).build();
+		}
 	}
 
 }
