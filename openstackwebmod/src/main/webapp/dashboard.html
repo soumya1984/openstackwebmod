@@ -10,10 +10,11 @@
  
  <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.3.min.css" />
  <link rel="stylesheet" type="text/css" href="./css/style-added.css" />
-  
- <script src="javascript/jquery-1.11.1.min.js"></script>
+     
+ <script src="javascript/jquery-2.1.1.min.js"></script>
  <script src="javascript/jquery.mobile-1.4.3.min.js"></script>
- 
+
+ <script src="javascript/create_insts_funcs.js"></script>
  <script>     
  
  
@@ -73,28 +74,28 @@
 	</div> -->
       </div>
     
-      <div data-role"main" id="pageone-main">
+  <div class="main" id="pageone-main">
 	<div id="right-nav" class="right">
 	  <p id="openstack-badge">
 	    <img src=resources/download-openstack-badge.png>
 	  </p>
   
-	  <div data-role="nav" id="nav">
-	    <ul id="navlist">
-	      <li><a href="rest/openstack/serverDetails" id="active-inst-button" data-role="button">Active VMs</a></li>
-	      <li><a href="ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
-	      <li><a href="#other" data-role="button" id="other-stuff-button" data-ajax="false">Other Features</a></li>
-	    </ul>
-	  </div>
-	  
-	  <div id="email">
-	    <span>Contact:<br></span>
-	    <span class="email" id="email1"><a href=ocbrewing@gmail.com>Jason Rogers</a></span><br>
-	    <span class="email" id="email2"><a href=blah@blah.gmail.com>Jijo Xavier</a></span><br>
-	    <span class="email" id="email3"><a href=hugh@gmail.com>Hugh Ma</a></span><br>
-	    <span class="email" id="email4"><a href=sweer@gmail.com>Sweer Kaul</a></span><br>
-	    <span class="email" id="email5"><a href=soumya@gmail.com>Soumya Acharya</a></span><br>
-	  </div>
+		<div data-role="nav" id="nav">
+		    <ul id="navlist">
+		      <li><a href="rest/openstack/serverDetails" id="active-inst-button" data-role="button">Active VMs</a></li>
+		      <li><a href="./ajax/create_insts.html" id="create-vms-button" data-role="button">Launch New Services</a></li>
+		      <li><a href="./ajax/account.html" id="account-button" data-role="button">Account</a></li>
+		    </ul>
+		</div>
+		  
+		<div id="email">
+		    <span>Contact:<br></span>
+		    <span class="email" id="email1"><a href=ocbrewing@gmail.com>Jason Rogers</a></span><br>
+		    <span class="email" id="email2"><a href=blah@blah.gmail.com>Jijo Xavier</a></span><br>
+		    <span class="email" id="email3"><a href=hugh@gmail.com>Hugh Ma</a></span><br>
+		    <span class="email" id="email4"><a href=sweer@gmail.com>Sweer Kaul</a></span><br>
+		    <span class="email" id="email5"><a href=soumya@gmail.com>Soumya Acharya</a></span><br>
+		</div>
 	</div> <!-- End of Right Nav -->
 	
 
@@ -104,67 +105,9 @@
 	  <div id="ui-tabs-1" class="ui-content left"></div>
 
 	  <div id="ui-tabs-2" class="ui-content left"></div>
+
+	  <div id="ui-tabs-3" class="ui-content"></div>
 	    
-	  <div id="other" class="ui-content left">
-	    <table data-role="table" id="vm-table" class="vm_list ui-responsive" data-mode="columntoggle">
-	    <thead id="vm_table_head">
-	      <tr>
-		<th>Other</th>
-		<th data-priority="10"><a href="ajax/dialog.html">Image Name</a></th>
-		<th data-priority=9">IP Address</th>
-		<th data-priority="8">Size</th>
-		<th data-priority="7">Key Pair</th>
-		<th data-priority="6">Status</th>
-		<th data-priority="5">Availability Zone</th>
-		<th data-priority="4">Task</th>
-		<th data-priority="3">Power State</h>
-		<th data-priority="2">Uptime</th>
-		<th data-priority="1">Actions</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr>
-		<td>A</td>
-		<td>B</td>
-		<td>C</td>
-		<td>D</td>
-		<td>E</td>
-		<td>F</td>
-		<td>G</td>
-		<td>H</td>
-		<td>I</td>
-		<td>J</td>
-		<td>K</td>
-	      </tr>
-	      <tr>
-		<td>A</td>
-		<td>B</td>
-		<td>C</td>
-		<td>D</td>
-		<td>E</td>
-		<td>F</td>
-		<td>G</td>
-		<td>H</td>
-		<td>I</td>
-		<td>J</td>
-		<td>K</td>
-	      </tr>
-	      <tr>
-		<td>A</td>
-		<td>B</td>
-		<td>C</td>
-		<td>D</td>
-		<td>E</td>
-		<td>F</td>
-		<td>G</td>
-		<td>H</td>
-		<td>I</td>
-		<td>J</td>
-		<td>K</td>
-	      </tr>
-	    </tbody>
-	  </table>	
-	  </div>   <!-- End of Other Table -->
 	</div>   <!-- End of left main content for tab display -->
       
       </div> <!-- End of Main -->
@@ -178,20 +121,15 @@
   <script>
   //var map = new Object();
   var buttonHtml="";
-    var dom_test = "Testing The Scope of a Dialog";        
     $("#pageone-tabs").tabs({
           create: function(event, ui) {
 	    console.log("Creation called");
 	  },
 	  beforeLoad: function(event, ui) {
-            var url = ui.ajaxSettings.url;
+        var url = ui.ajaxSettings.url;
 	    var table_html = "<table id=\"dynamic-table\" class=\"vm_list ui-responsive\" data-role=\"table\">";
 	    var table_head = "<thead>";
 	    var table_body = "<tbody>";
-	   // html="<html lang=\"en\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">"
-	   // 	  +"<link rel=\"stylesheet\" type=\"text/css\" href=\"css/customButton.css\">"
-	   // 	  +"<\/head><body>" ;
-	   // var serverId ;
 	    if (url =="rest/openstack/serverDetails") {
 	      console.log("Need to load and parse JSON");
 	      console.log(ui.ajaxSettings);

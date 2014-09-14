@@ -1,0 +1,103 @@
+<script>
+    function parseUptime(utime) {
+        var res = [];
+        
+        res = utime.match(/(.*)h (.*)m/);
+        
+        hours = parseInt(res[1]);
+        
+        minutes = parseInt(res[2]);
+        converted = 60*hours+minutes;
+        return converted;
+    }
+
+</script>
+
+
+
+<div data-role="content" class="bill-content">
+    <div id="billing">
+        <h1 id="billing-title">Account Info/Billing</h1>
+    </div>
+
+    <div id="billing-table">
+        <table data-role="table" id="bill-table" class="vm_list">
+            <thead id="bill_table_head">
+                <tr>
+                <th>Instance Name</th>
+                <th>Uptime</th>
+                <th>$ per Min</th>
+                <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="bill-tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+/*    var sample_json = [{
+"name" : "my_instance_1",
+"id" : "some UUID",
+"status" : "Running",
+"uptime" : "1h 3min",
+"os" : "CEntOS 7.1",
+"cpu_usage_percent" : "70",
+"icon" : "/os_icon?id=uuid"
+},
+{
+"name" : "my_instance_2",
+"id" : "some UUID2",
+"status" : "Paused",
+"uptime" : "1h 3min",
+"os" : "CEntOS 7.1",
+"cpu_usage_percent" : "0",
+"icon" : "/os_icon?id=uuid2"
+}];
+*/
+    
+    $(document).ready(function(){
+        var url = "rest/openstack/serverDetails";
+        var insts = {};
+        $.ajax({url:url,success:function(data){
+            var row_index=0;
+            insts = data.serverList;
+	}});
+        
+        //insts = sample_json;
+        
+        var row_index=0;
+        var costpermin = "2.50";  // cost $2.50 per min per VM hardcode
+        var inst_total = 0;
+        var total = 0;
+        var uptime = 0;
+        var table_body = "";
+        
+	$.each(insts, function(index, value) {
+            table_body+="<tr>\n"; //form new row for each array index
+            $.each(value, function(index2, value2) {
+                if (index2 == "name") {
+                    table_body+="<td>"+value2+"</td>";
+                } else if (index2 == "uptime") {
+                    table_body+="<td>"+value2+"</td>";
+                    uptime = parseUptime(value2)
+                    //console.log("Uptime= "+uptime);
+                    inst_total = uptime*parseFloat(costpermin);
+                    total +=inst_total;
+                    table_body+="<td> $ "+costpermin+"</td>";
+                    table_body+="<td> $ "+inst_total.toFixed(2)+"</td>";
+                }
+            });
+            table_body+="</tr>\n";
+        });
+        table_body+="<tr><td></td><td></td><td>Total This Month</td><td> $ "+total.toFixed(2)+"</td>";
+
+	$("#bill-tbody").append($(table_body));
+    
+    });
+    
+
+</script>
