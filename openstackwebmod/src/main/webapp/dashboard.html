@@ -274,8 +274,10 @@
 				var action = $("#"+server_id).val();
 				//alert(button_val);
 				var requesturl ="rest/openstack/doaction?&server_id="+server_id+"&action="+action+"&";
-				   $.ajax({url:requesturl,success:function(data){
-					   alert(data);
+				$.ajax({url:requesturl,success:function(data){
+			    var html="<div><P>Successfully initiated the request,please check the status in dashboard </P></div>"
+			    var myWindow = window.open("", "MsgWindow", "width=200, height=100");
+					   myWindow.document.write(html);
 					    }});			
 			}
 		</script>
