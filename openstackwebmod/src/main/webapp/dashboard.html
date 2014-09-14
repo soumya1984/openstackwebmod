@@ -6,6 +6,7 @@
  
  <link rel="stylesheet" href="./css/custom-theme-a.css">
  <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css">
+ <link rel="stylesheet" href="./css/button.css">
  
  <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.3.min.css" />
  <link rel="stylesheet" type="text/css" href="./css/style-added.css" />
@@ -176,7 +177,7 @@
   
   <script>
   //var map = new Object();
-  var html;
+  var buttonHtml="";
     var dom_test = "Testing The Scope of a Dialog";        
     $("#pageone-tabs").tabs({
           create: function(event, ui) {
@@ -187,9 +188,9 @@
 	    var table_html = "<table id=\"dynamic-table\" class=\"vm_list ui-responsive\" data-role=\"table\">";
 	    var table_head = "<thead>";
 	    var table_body = "<tbody>";
-	    html="<html lang=\"en\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">"
-	    	  +"<link rel=\"stylesheet\" type=\"text/css\" href=\"css/customButton.css\">"
-	    	  +"<\/head><body>" ;
+	   // html="<html lang=\"en\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">"
+	   // 	  +"<link rel=\"stylesheet\" type=\"text/css\" href=\"css/customButton.css\">"
+	   // 	  +"<\/head><body>" ;
 	   // var serverId ;
 	    if (url =="rest/openstack/serverDetails") {
 	      console.log("Need to load and parse JSON");
@@ -198,22 +199,27 @@
 				//nested each - first is the array of json, second is json itself
 				var row_index=0;
 				var serverID;
+				var start;
+				var stop;
 				$.each(data.serverList, function(index, value) {
 				  table_body+="<tr>\n"; //form new row for each array index
 				  var counter=1;
+				  stop = false;
+				  start = false;
 				  $.each(value, function(index2, value2) {
+					 // buttonHtml ="";
 				    if (index==0) {  //only fill header from first element
 				      table_head+=("<th data-priority=\""+counter+"\">"+index2+"</th>");
 				      counter+=counter;
 				    }
 				    if(index2 == "id"){
 				    	table_body+=("<td><a href=\"#\" onclick=\"openWindow()\">"+value2+"</a></td>");
-				    	html+=("<div id="+value2+" class=\"container\">");
-				    	html+=("<tr><td><lebel>Server ID:"+value2+"</lebel></td>")
+				    	//html+=("<div id="+value2+" class=\"container\">");
+				    	//html+=("<tr><td><lebel>Server ID:"+value2+"</lebel></td>")
 				    	serverID = value2;
 				    }else if(index2 == "name"){
 				    	table_body+=("<td>"+value2+"</td>");
-				    	html+=("<td><lebel>Server Name:"+value2+"</lebel></td>")
+				    	//html+=("<td><lebel>Server Name:"+value2+"</lebel></td>")
 				    }
 				    else if(index2 == "image"){
 				    	table_body+=("<td>"+"Name:"+value2.imageName+"\n"+"Id:"+value2.id+"</td>");
@@ -222,24 +228,31 @@
 				    }else if(index2 == "status"){
 				    	table_body+=("<td>"+value2+"</td>");
 				      if(value2 =="ACTIVE"){
-				    	  html+=("<td><button id="+serverID+"  class=\"button active\">Stop</button></td>");
+				    	  //html+=("<td><button id="+serverID+"  class=\"button active\">Stop</button></td>");
+				    	  //buttonHtml+=("<div class=\"button button-red\">Stop!</div>");
+				    	  stop = true;
 				      }
 				      if(value2 =="UNRECOGNIZED"){
-				    	  html+=("<td><button id="+serverID+" class=\"button active\">Start</button></td>");
+				    	 start = true;
 				      }
-			    	  html+=("</tr></div>");
 				    }
 				    else{
 				      table_body+=("<td>"+value2+"</td>");
 				    }
 
 				  });
+				 if(start == true){
+					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Start\" class=\"btnstop\">Start!</div></button>");
+				 }
+				 if(stop ==true){
+					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Stop\" class=\"btnstart\">Stop!</div></button>");
+				 }
 				  table_body+="</tr>\n";
 				});
 				table_head+="</thead>";
 				table_body+="</tbody>";
-				html+="</body></html>";
-				console.log(html);
+				// html+="</body></html>";
+				//console.log(html);
 				table_html=table_html.concat(table_head, table_body, "</table>");
 				//console.log("Full table markup "+table_html);
 				ui.panel.html(table_html);
@@ -256,11 +269,15 @@
     $(document).ready(function(){
     	$(window).trigger('resize');
     });
-    function openWindow(){
-    	//event.preventdefault();
-    	var myWindow = window.open("", "MsgWindow", "width=500, height=500");
-    	myWindow.document.write(html);
-    } 
-  </script>
+   function reply_click(server_id) {
+				//alert(clicked_id);
+				var action = $("#"+server_id).val();
+				//alert(button_val);
+				var requesturl ="rest/openstack/doaction?&server_id="+server_id+"&action="+action+"&";
+				   $.ajax({url:requesturl,success:function(data){
+					   alert(data);
+					    }});			
+			}
+		</script>
   </body>
 </html>

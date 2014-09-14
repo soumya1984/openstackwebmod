@@ -20,10 +20,14 @@
         // If mode is basic, validate and put together the JSON and send to backend
         var num_insts = $("#num-insts").val;
         var error_spin = "<p id=\"errspin\" ><font color=\"red\">Error: Please set number of VMs between 1 and 5</font></p>";
-
-        var request = "{\"serverslist\":[{\"servername\":\"myserver1\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"},{\"servername\":\"myserver2\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}]}";
-        
-        $.post(
+        var request = "{\"serverslist\":[{\"servername\":\"myserver1\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}";
+        var serverInstance = "{\"servername\":\"myserver2\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}";
+        for(var i=0;i<num_insts.length; i++){
+        	request +=","+serverInstance;
+        }
+        request +="]}";
+       //{\"servername\":\"myserver2\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}]}"
+     $.post(
             "rest/openstack/createServers",
             request,
             function (data, status) {

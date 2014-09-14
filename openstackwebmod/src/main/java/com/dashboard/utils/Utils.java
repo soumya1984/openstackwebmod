@@ -105,5 +105,12 @@ public class Utils {
 		}
 		return serversList;
 	}
-	
+	public  String doneActionOnServer(String serverId,OSClient os,String action,String provider) {
+		String response=null;
+		if (provider.trim().equalsIgnoreCase("openstack")) {
+			OpenstackUtils util = new OpenstackUtils();
+			response = util.doneActionOnServer(serverId, os, action);
+		}
+		return response;
+	}
 }

@@ -9,7 +9,9 @@ import java.util.List;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.api.compute.ComputeService;
+import org.openstack4j.model.compute.Action;
 import org.openstack4j.model.compute.Image;
+import org.openstack4j.model.compute.RebootType;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
 import org.openstack4j.model.network.Network;
@@ -83,26 +85,26 @@ public class OpenstackUtils {
 			// return new ArrayList<Image>(images);
 			for (Server nova : novaServers) {
 				com.dashboard.domain.objects.Server customServ = new com.dashboard.domain.objects.Server();
-				customServ.setAccessIPv4(nova.getAccessIPv4());
-				customServ.setAccessIPv6(nova.getAccessIPv6());
-				customServ.setCreated(nova.getCreated());
-				customServ.setHostId(nova.getHostId());
+				//customServ.setAccessIPv4(nova.getAccessIPv4());
+				//customServ.setAccessIPv6(nova.getAccessIPv6());
+				//customServ.setCreated(nova.getCreated());
+				//customServ.setHostId(nova.getHostId());
 				customServ.setId(nova.getId());
-				customServ.setKeyName(nova.getKeyName());
+				//customServ.setKeyName(nova.getKeyName());
 				customServ.setName(nova.getName());
 				customServ.setProgress(nova.getProgress());
 				customServ.setStatus(nova.getStatus().name());
-				customServ.setTenantId(nova.getTenantId());
-				customServ.setUpdated(nova.getUpdated());
-				customServ.setUserId(nova.getUserId());
+				//customServ.setTenantId(nova.getTenantId());
+				//customServ.setUpdated(nova.getUpdated());
+				//customServ.setUserId(nova.getUserId());
 				// custom
 				// Flavor..===================================================
 				com.dashboard.domain.objects.Flavor flavor = new com.dashboard.domain.objects.Flavor(
 						nova.getFlavor().getId(), nova.getFlavor().getName());
 				customServ.setFlavor(flavor);
 				// /=================================================================
-				customServ.setAccessIPv4(nova.getAccessIPv6());
-				customServ.setAccessIPv4(nova.getAccessIPv6());
+				//customServ.setAccessIPv4(nova.getAccessIPv6());
+				//customServ.setAccessIPv4(nova.getAccessIPv6());
 				// Image
 				// .........====================================================
 				Image novaImage = nova.getImage();
@@ -146,6 +148,18 @@ public class OpenstackUtils {
 		}
 		return servers;
 
+	}
+	
+	public String doneActionOnServer(String serverId,OSClient os,String action){
+		if(action.equalsIgnoreCase("start")){
+			os.compute().servers().action(serverId, Action.START);
+			return "success";
+		}
+		if(action.equalsIgnoreCase("stop")){
+		os.compute().servers().action(serverId, Action.STOP);
+		return "success";
+		}
+		return "failure";
 	}
 
 	private List<String> getNetworkIdList(List<? extends Network> networks) {

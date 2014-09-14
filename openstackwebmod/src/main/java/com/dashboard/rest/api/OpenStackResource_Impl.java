@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Past;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
@@ -161,6 +163,24 @@ public class OpenStackResource_Impl extends Application {
 					.entity(new Gson().toJson(response)).build();
 		} else {
 			return Response.status(401).build();
+		}
+	}
+	@GET
+	@Path("/doaction")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_JSON)
+	public Response dosActionOnServer(@QueryParam("server_id")String serverId,@QueryParam("action")String action, @Context UriInfo uriInfo) {
+		System.out.println(serverId);
+		OSClient osc = _authFromSession();
+		if (osc != null) {
+			Utils utils = new Utils();
+			String provider = Constants.provider;
+             String result = utils.doneActionOnServer(serverId, osc, action, provider);
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			return Response.created(builder.build()).status(200)
+					.build();
+		} else {
+			return Response.status(500).build();
 		}
 	}
 

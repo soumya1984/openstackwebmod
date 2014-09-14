@@ -16,15 +16,15 @@ public class CreateServerRequestList implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<CreateServerRequest> server = new ArrayList<CreateServerRequest>();
+	private List<CreateServerRequest> serverslist = new ArrayList<CreateServerRequest>();
 
 	@XmlElementRef
 	public List<CreateServerRequest> getRequest() {
-		return server;
+		return serverslist;
 	}
 	
 	public void setRequest(List<CreateServerRequest> list) {
-		this.server = list;
+		this.serverslist = list;
 
 	}
 
