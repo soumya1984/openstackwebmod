@@ -1,5 +1,46 @@
 
-<div data-role="content" class="cr-content">
+<script scr="javascript/create_insts_funcs.js"></script>
+<script>
+/*       
+    function submitFunction() {
+        //alert("Call to the submit function ");
+        // If mode is basic, validate and put together the JSON and send to backend
+        var num_insts = $("#num-insts").val;
+        var error_spin = "<p id=\"errspin\" ><font color=\"red\">Error: Please set number of VMs between 1 and 5</font></p>";
+        var request = "{\"serverslist\":[{\"servername\":\"myserver1\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}";
+        var serverInstance = "{\"servername\":\"myserver2\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}";
+        for(var i=0;i<num_insts.length; i++){
+        	request +=","+serverInstance;
+        }
+        request +="]}";
+       //{\"servername\":\"myserver2\",\"imageName\":\"9be0b7bb-aca2-41f1-984d-566ae9385cb0\",\"flavour\":\"1\"}]}"
+     $.post(
+            "rest/openstack/createServers",
+            request,
+            function (data, status) {
+                console("Data from the server is "+data);
+                console("Status returned was "+status);
+            });
+        
+        if($('input:radio("name==radio_choice"):checked').val() == "Basic"){
+            //alert("Spin value "+"#num-insts".readonly);
+            if ($("#num-insts").val() < 1 || $("#num-insts").val() > 5) {
+                //alert("Found illegal number of inst!");
+                if ($("#errspin").length > 0) {
+                    //do nothing, error msg is already ther
+                } else {
+                    $("#basic-create").append($(error_spin));        
+                }
+            }
+        } // if mode is service, validate prefix and send the service type to the createService function
+        else if($('input:radio("name==radio_choice"):checked').val() == "Services") {
+        }
+        
+    }
+  */  
+</script>
+
+<div data-role="content" class="ui-content">
     <div id="create-title">
         <h1 id="cr-title">Create New VMs and Services</h1>
     </div>

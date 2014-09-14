@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -12,6 +14,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.dashboard.domain.objects.AuthResponse;
+import com.dashboard.domain.objects.Server;
+import com.dashboard.rest.request.bean.CreateServerRequest;
+import com.dashboard.rest.request.bean.CreateServerRequestList;
+import com.google.gson.Gson;
 
 public class HttpUtill {
 
@@ -93,4 +99,23 @@ public class HttpUtill {
 		}
 		return sb.toString();
 	}
+	
+	
+public static void main(String[] args){
+	HttpUtill httpUtil = new HttpUtill();
+	CreateServerRequestList serverList = new CreateServerRequestList();
+	CreateServerRequest server1 = new CreateServerRequest("myserver1","CMPE-MINI","m1.tiny");
+	CreateServerRequest server2 = new CreateServerRequest("myserver2","CMPE-MINI","m1.tiny");
+	//server1.setFlavour();
+	List<CreateServerRequest> list = new ArrayList<CreateServerRequest>();
+	list.add(server1);
+	list.add(server2);
+	serverList.setRequest(list);
+	String request =new Gson().toJson(serverList);
+	System.out.println(request);
+	httpUtil.getHttpPostClientResponse("http://localhost:8080//openstackwebmod/rest/openstack/createServers", "application/json", request);
+}	
+	
+	
+	
 }
