@@ -144,7 +144,7 @@ public class OpenStackResource_Impl extends Application {
 	@POST
 	@Path("/createServers")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("application/json")
 	public Response createServer(String x, @Context UriInfo uriInfo) {
 		System.out.println(x);
 		CreateServerRequestList requestlist = new Gson().fromJson(x,

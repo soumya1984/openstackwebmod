@@ -135,9 +135,9 @@ public class OpenstackUtils {
 			// Create a Server Model Object
 			ServerCreate sc = Builders
 					.server()
-					.name(request.getServername())
-					.flavor(request.getFlavour())
-					.image(request.getImageName())
+					.name(request.getServername().toString())
+					.flavor(request.getFlavour().toString())
+					.image(request.getImageName().toString())
 					.networks(networkIdList)
 					.build();
 			// Boot the Server

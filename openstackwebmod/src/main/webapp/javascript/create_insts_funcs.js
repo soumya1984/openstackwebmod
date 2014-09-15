@@ -52,8 +52,8 @@
                 var instname = $("#vm-name").val();
                 //var flavor = $("#vm-flavor").val();
                 //var image = $("#vm-image").val();
-                var flavor = "m1.tiny";
-                var image = "CMPE-MINI";
+                var flavor = "1";
+                var image = "9be0b7bb-aca2-41f1-984d-566ae9385cb0";
                 var vmnum = $("#num-insts").val();
                 
                 var req = {
@@ -93,7 +93,7 @@
                 $.ajax({
 	                type: "POST",
 	                url: url,
-	                data: req,
+	                data: JSON.stringify(req),
 	                contentType: "application/json; charset=utf-8",
 	                dataType: "json",
 	                success: function (data, status, jqXHR) {
@@ -116,7 +116,7 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: request,
+                data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data, status, jqXHR) {
