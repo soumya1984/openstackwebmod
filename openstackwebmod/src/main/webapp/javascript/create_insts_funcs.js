@@ -2,8 +2,8 @@
         //alert("Call to the submit function ");
         // If mode is basic, validate and put together the JSON and send to backend
         var vmreq = {
-            "servername" : "",
-            "imageName" : "c70d236a-ef4a-43bd-8bca-7ce227880031",
+            "serverName" : "",
+            "imageName" : "9be0b7bb-aca2-41f1-984d-566ae9385cb0",
             "flavour"   : "1"
         };
     
@@ -11,7 +11,7 @@
         var error_spin = "<div id=\"errspin\" ><font color=\"red\">Error: Please set number of VMs between 1 and 5</font></div>";
         var error_name = "<div id=\"errname\" ><font color=\"red\">Error: Instance Name must start with a letter and be non-empty.</font></div>";
                 
-        //var request = {"request":[{"servername":"MY VM 3","imageName":"CMPE-MINI","flavour":"m1.tiny"},{"servername":"MY VM 4","imageName":"CMPE-MINI","flavour":"m1.tiny"}]};
+        //var request = {"request":[{"serverName":"MY VM 3","imageName":"CMPE-MINI","flavour":"m1.tiny"},{"serverName":"MY VM 4","imageName":"CMPE-MINI","flavour":"m1.tiny"}]};
         var url = "rest/openstack/createServers";
        
        /* 
@@ -53,19 +53,19 @@
                 //var flavor = $("#vm-flavor").val();
                 //var image = $("#vm-image").val();
                 var flavor = "1";
-                var image = "c70d236a-ef4a-43bd-8bca-7ce227880031";
+                var image = "9be0b7bb-aca2-41f1-984d-566ae9385cb0";
                 var vmnum = $("#num-insts").val();
                 
                 var req = {
-                    serverslist:[]
+                    serverList:[]
                 };
                 if (vmnum > 1) {
                     for (var i=0 ; i < vmnum ; i++) {
                         tempreq = Object.create(vmreq);
-                        tempreq["servername"] = instname+"_"+i;
-                        tempreq["imageame"] = image;
+                        tempreq["serverName"] = instname+"_"+i;
+                        tempreq["imageName"] = image;
                         tempreq["flavour"] = flavor;
-                        req.serverslist[req.serverslist.length] = tempreq;
+                        req.serverList[req.serverList.length] = tempreq;
                         // Send request to REST and change back to main tab
                         // if this doesn't work, try $.ajax for more options
                         
@@ -73,10 +73,10 @@
                                             
                 } else {
                     tempreq = Object.create(vmreq);
-                    tempreq["servername"] = instname;
+                    tempreq["serverName"] = instname;
                     tempreq["imageName"] = image;
                     tempreq["flavour"] = flavor;
-                    req.serverslist[0] = tempreq;
+                    req.serverList[0] = tempreq;
                     
                     // Send request to REST and change back to main tab
                     /*$.post(
@@ -164,38 +164,38 @@
         var scalable = $("#serve-scale").val();
 
         var vmreq = {
-            "servername" : "",
-            "imageName" : "c70d236a-ef4a-43bd-8bca-7ce227880031",
+            "serverName" : "",
+            "imageName" : "9be0b7bb-aca2-41f1-984d-566ae9385cb0",
             "flavour"   : "1"
         };
         
         var req = {
-            serverslist:[]
+            serverList:[]
         };
               
         if ($("#serve-type option:selected").val() =="SmallApp") {
             tempreq = Object.create(vmreq);
 
-            tempreq["servername"] = instname;
+            tempreq["serverName"] = instname;
             // Hardcoded right now..
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[0] = tempreq;            
+            req.serverList[0] = tempreq;            
         }
         else if ($("#serve-type option:selected").val() =="WebSite") {
             tempreq = Object.create(vmreq);
 
-            tempreq["servername"] = instname+"_webserver";
+            tempreq["serverName"] = instname+"_webserver";
             // Hardcoded right now..
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[0] = tempreq;
+            req.serverList[0] = tempreq;
 
             tempreq = Object.create(vmreq);            
             tempreq["servermame"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[1] = tempreq;
+            req.serverList[1] = tempreq;
         }
         else if ($("#serve-type option:selected").val() =="LargeWebSite") {
             
@@ -203,22 +203,22 @@
             //tempreq["imageName"] = image;
             //tempreq["flavour"] = flavor;
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_web";
+            tempreq["serverName"] = instname+"_web";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[0] = tempreq;
+            req.serverList[0] = tempreq;
             
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_web2";
+            tempreq["serverName"] = instname+"_web2";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[1] = tempreq;
+            req.serverList[1] = tempreq;
 
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_sqldb";
+            tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[2] = tempreq;        
+            req.serverList[2] = tempreq;        
         }
         else if ($("#serve-type option:selected").val() == "EnterpriseCloud") {
             tempreq = Object.create(vmreq);
@@ -226,30 +226,30 @@
             //tempreq["imageName"] = image;
             //tempreq["flavour"] = flavor;
             
-            tempreq["servername"] = instname+"_ecloud";
+            tempreq["serverName"] = instname+"_ecloud";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[0] = tempreq;
+            req.serverList[0] = tempreq;
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_ecloud1";
+            tempreq["serverName"] = instname+"_ecloud1";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[1] = tempreq;
+            req.serverList[1] = tempreq;
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_sqldb";
+            tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[2] = tempreq;
+            req.serverList[2] = tempreq;
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_ec_webapps";
+            tempreq["serverName"] = instname+"_ec_webapps";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[3] = tempreq;
+            req.serverList[3] = tempreq;
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_ec_payroll";
+            tempreq["serverName"] = instname+"_ec_payroll";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.serverslist[4] = tempreq;        
+            req.serverList[4] = tempreq;        
 
         }
         return req;
