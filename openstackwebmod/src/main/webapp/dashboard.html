@@ -77,7 +77,7 @@
   <div class="main" id="pageone-main">
 	<div id="right-nav" class="right">
 	  <p id="openstack-badge">
-	    <img src=resources/download-openstack-badge.png>
+	    <img src=resources/download-openstack-badge.png width=60%>
 	  </p>
   
 		<div data-role="nav" id="nav">
@@ -102,9 +102,9 @@
 	<div id="left-content" class="ui-body-d ui-content left">
 	
 	  <!-- Placeholder Divs to put the Tabs HTML -->
-	  <div id="ui-tabs-1" class="ui-content left"></div>
+	  <div id="ui-tabs-1" class="ui-content"></div>
 
-	  <div id="ui-tabs-2" class="ui-content left"></div>
+	  <div id="ui-tabs-2" class="ui-content"></div>
 
 	  <div id="ui-tabs-3" class="ui-content"></div>
 	    
@@ -206,6 +206,7 @@
     }); 
     $(document).ready(function(){
     	$(window).trigger('resize');
+    	$("#active-inst-button").click();
     });
    function reply_click(server_id) {
 				//alert(clicked_id);

@@ -3,8 +3,8 @@
         // If mode is basic, validate and put together the JSON and send to backend
         var vmreq = {
             "serverName" : "",
-            "imageName" : "CMPE-MINI",
-            "flavour"   : "m1.tiny"
+            "imageName" : "c70d236a-ef4a-43bd-8bca-7ce227880031",
+            "flavour"   : "1"
         };
     
         var num_insts = $("#num-insts").val;
@@ -52,12 +52,12 @@
                 var instname = $("#vm-name").val();
                 //var flavor = $("#vm-flavor").val();
                 //var image = $("#vm-image").val();
-                var flavor = "m1.tiny";
-                var image = "CMPE-MINI";
+                var flavor = "1";
+                var image = "c70d236a-ef4a-43bd-8bca-7ce227880031";
                 var vmnum = $("#num-insts").val();
                 
                 var req = {
-                    request:[]
+                    serverslist:[]
                 };
                 if (vmnum > 1) {
                     for (var i=0 ; i < vmnum ; i++) {
@@ -65,7 +65,7 @@
                         tempreq["servername"] = instname+"_"+i;
                         tempreq["imageName"] = image;
                         tempreq["flavour"] = flavor;
-                        req.request[req.request.length] = tempreq;
+                        req.serverslist[req.serverslist.length] = tempreq;
                         // Send request to REST and change back to main tab
                         // if this doesn't work, try $.ajax for more options
                         
@@ -76,7 +76,7 @@
                     tempreq["serverName"] = instname;
                     tempreq["imageName"] = image;
                     tempreq["flavour"] = flavor;
-                    req.request[0] = tempreq;
+                    req.serverslist[0] = tempreq;
                     
                     // Send request to REST and change back to main tab
                     /*$.post(
@@ -93,7 +93,7 @@
                 $.ajax({
 	                type: "POST",
 	                url: url,
-	                data: req,
+	                data: JSON.stringify(req),
 	                contentType: "application/json; charset=utf-8",
 	                dataType: "json",
 	                success: function (data, status, jqXHR) {
@@ -116,7 +116,7 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: request,
+                data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data, status, jqXHR) {
@@ -165,12 +165,12 @@
 
         var vmreq = {
             "serverName" : "",
-            "imageName" : "CMPE-MINI",
-            "flavour"   : "m1.tiny"
+            "imageName" : "c70d236a-ef4a-43bd-8bca-7ce227880031",
+            "flavour"   : "1"
         };
         
         var req = {
-            request:[]
+            serverslist:[]
         };
               
         if ($("#serve-type option:selected").val() =="SmallApp") {
@@ -180,7 +180,7 @@
             // Hardcoded right now..
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[0] = tempreq;            
+            req.serverslist[0] = tempreq;            
         }
         else if ($("#serve-type option:selected").val() =="WebSite") {
             tempreq = Object.create(vmreq);
@@ -189,13 +189,13 @@
             // Hardcoded right now..
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[0] = tempreq;
+            req.serverslist[0] = tempreq;
 
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[1] = tempreq;
+            req.serverslist[1] = tempreq;
         }
         else if ($("#serve-type option:selected").val() =="LargeWebSite") {
             
@@ -206,19 +206,19 @@
             tempreq["serverName"] = instname+"_web";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[0] = tempreq;
+            req.serverslist[0] = tempreq;
             
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_web2";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[1] = tempreq;
+            req.serverslist[1] = tempreq;
 
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[2] = tempreq;        
+            req.serverslist[2] = tempreq;        
         }
         else if ($("#serve-type option:selected").val() == "EnterpriseCloud") {
             tempreq = Object.create(vmreq);
@@ -229,27 +229,27 @@
             tempreq["serverName"] = instname+"_ecloud";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[0] = tempreq;
+            req.serverslist[0] = tempreq;
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_ecloud1";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[1] = tempreq;
+            req.serverslist[1] = tempreq;
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[2] = tempreq;
+            req.serverslist[2] = tempreq;
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_ec_webapps";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[3] = tempreq;
+            req.serverslist[3] = tempreq;
             tempreq = Object.create(vmreq);            
             tempreq["serverName"] = instname+"_ec_payroll";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
-            req.request[4] = tempreq;        
+            req.serverslist[4] = tempreq;        
 
         }
         return req;

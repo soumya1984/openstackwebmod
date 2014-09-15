@@ -93,7 +93,7 @@ public class OpenstackUtils {
 				//customServ.setKeyName(nova.getKeyName());
 				customServ.setName(nova.getName());
 				customServ.setProgress(nova.getProgress());
-				customServ.setStatus(nova.getStatus().name());
+				customServ.setStatus(nova.getVmState());
 				//customServ.setTenantId(nova.getTenantId());
 				//customServ.setUpdated(nova.getUpdated());
 				//customServ.setUserId(nova.getUserId());
