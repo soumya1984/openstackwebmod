@@ -14,24 +14,24 @@ import javax.xml.bind.annotation.XmlType;
 public class CreateServerRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	public String servername;
+	public String serverName;
 	public String imageName;
 	public String flavour;
 
 	public CreateServerRequest(String servername, String imageName,
 			String flavour) {
 		super();
-		this.servername = servername;
+		this.serverName = servername;
 		this.imageName = imageName;
 		this.flavour = flavour;
 	}
 	@XmlElement(name = "servername")
 	public String getServername() {
-		return servername;
+		return serverName;
 	}
 
 	public void setServername(String servername) {
-		this.servername = servername;
+		this.serverName = servername;
 	}
 	@XmlElement(name = "imagename")
 	public String getImageName() {
@@ -52,7 +52,7 @@ public class CreateServerRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		return "server{" + "servername=" + servername + ", imageName='"
+		return "server{" + "servername=" + serverName + ", imageName='"
 				+ imageName + '\'' + ", flavour='" + flavour + '}';
 	}
 }
