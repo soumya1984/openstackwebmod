@@ -62,7 +62,7 @@
                 if (vmnum > 1) {
                     for (var i=0 ; i < vmnum ; i++) {
                         tempreq = Object.create(vmreq);
-                        tempreq["servername"] = instname+"_"+i;
+                        tempreq["serverName"] = instname+"_"+i;
                         tempreq["imageName"] = image;
                         tempreq["flavour"] = flavor;
                         req.request[req.request.length] = tempreq;
@@ -159,8 +159,8 @@
         
         //alert("Call to createService function");
         var instname = $("#serve-name").val();
-        var flavor = "m1.tiny";
-        var image = "CMPE-MINI";
+        var flavor = "1";
+        var image = "9be0b7bb-aca2-41f1-984d-566ae9385cb0";
         var scalable = $("#serve-scale").val();
 
         var vmreq = {
