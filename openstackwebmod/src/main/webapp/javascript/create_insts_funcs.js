@@ -3,7 +3,7 @@
         // If mode is basic, validate and put together the JSON and send to backend
         var vmreq = {
             "serverName" : "",
-            "imageName" : "9be0b7bb-aca2-41f1-984d-566ae9385cb0",
+            "imageName" : "c70d236a-ef4a-43bd-8bca-7ce227880031",
             "flavour"   : "1"
         };
     
@@ -53,7 +53,7 @@
                 //var flavor = $("#vm-flavor").val();
                 //var image = $("#vm-image").val();
                 var flavor = "1";
-                var image = "9be0b7bb-aca2-41f1-984d-566ae9385cb0";
+                var image = "c70d236a-ef4a-43bd-8bca-7ce227880031";
                 var vmnum = $("#num-insts").val();
                 
                 var req = {

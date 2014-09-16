@@ -4,6 +4,7 @@
 package com.dashboard.openstack.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openstack4j.api.Builders;
@@ -141,6 +142,10 @@ public class OpenstackUtils {
 		
 		
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
+		
+		List<String> networkId = new ArrayList<String>();
+		networkId.add("e4956e96-698f-4459-abb5-a3fdccca02b5");
+		
 		for (CreateServerRequest request : list) {
 			// Create a Server Model Object
 			ServerCreate sc = Builders
@@ -148,7 +153,7 @@ public class OpenstackUtils {
 					.name(request.getServername().toString())
 					.flavor(request.getFlavour().toString())
 					.image(request.getImageName().toString())
-					.networks(networkIdList)
+					.networks(networkId)
 					.build();
 			// Boot the Server
 			Server server = osc.compute().servers().boot(sc);
