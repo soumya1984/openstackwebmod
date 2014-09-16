@@ -160,7 +160,7 @@
         //alert("Call to createService function");
         var instname = $("#serve-name").val();
         var flavor = "1";
-        var image = "9be0b7bb-aca2-41f1-984d-566ae9385cb0";
+        var image = "c70d236a-ef4a-43bd-8bca-7ce227880031";
         var scalable = $("#serve-scale").val();
 
         var vmreq = {
@@ -192,7 +192,7 @@
             req.serverslist[0] = tempreq;
 
             tempreq = Object.create(vmreq);            
-            tempreq["servermame"] = instname+"_sqldb";
+            tempreq["servername"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
             req.serverslist[1] = tempreq;
