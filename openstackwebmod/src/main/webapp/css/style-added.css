@@ -220,7 +220,13 @@ ul
 }
  
 #main-content {
+  margin-left:auto;
+  margin-right:auto;
   background-image: url("http://www.pixeden.com/media/k2/galleries/189/004-clouds-set-collection-vector-sky.jpg");
+}
+
+#login-container {
+  width:30%;
 }
 
 #email {
