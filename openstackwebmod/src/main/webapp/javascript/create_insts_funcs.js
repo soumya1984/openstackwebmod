@@ -192,7 +192,7 @@
             req.serverList[0] = tempreq;
 
             tempreq = Object.create(vmreq);            
-            tempreq["servername"] = instname+"_sqldb";
+            tempreq["serverName"] = instname+"_sqldb";
             tempreq["imageName"] = image;
             tempreq["flavour"] = flavor;
             req.serverList[1] = tempreq;
