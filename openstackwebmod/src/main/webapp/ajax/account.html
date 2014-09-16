@@ -1,15 +1,8 @@
 <script>
     function parseUptime(utime) {
-        var res = [];
+        minutes = utime/60;
         
-        res = utime.match(/(.*)h (.*)m/);
-        
-        hours = parseInt(res[1]);
-        
-        minutes = parseInt(res[2]);
-        converted = 60*hours+minutes;
-        return converted;
-        
+        return minutes;
     }
 
 </script>
@@ -26,7 +19,7 @@
             <thead id="bill_table_head">
                 <tr>
                 <th>Instance Name</th>
-                <th>Uptime</th>
+                <th>Uptime (min)</th>
                 <th>$ per Min</th>
                 <th>Total</th>
                 </tr>
@@ -64,9 +57,8 @@
         var url = "rest/openstack/serverDetails";
         var insts = {};
         $.ajax({url:url,success:function(data){
-            var row_index=0;
             insts = data.serverList;
-	}});
+		
         
         //insts = sample_json;
         
@@ -77,16 +69,17 @@
         var uptime = 0;
         var table_body = "";
         
-	$.each(insts, function(index, value) {
+        //console.log(JSON.stringify(insts));
+		$.each(insts, function(index, value) {
             table_body+="<tr>\n"; //form new row for each array index
             $.each(value, function(index2, value2) {
                 if (index2 == "name") {
                     table_body+="<td>"+value2+"</td>";
-                } else if (index2 == "uptime") {
-                    table_body+="<td>"+value2+"</td>";
-                    uptime = parseUptime(value2)
-                    //console.log("Uptime= "+uptime);
-                    inst_total = uptime*parseFloat(costpermin);
+                } else if (index2 == "upTime") {
+                    table_body+="<td>"+parseUptime(value2).toFixed(1)+"</td>";
+                    uptime = parseUptime(value2).toFixed(1);
+                    console.log("Uptime= "+parseFloat(uptime));
+                    inst_total = parseFloat(uptime)*parseFloat(costpermin);
                     total +=inst_total;
                     table_body+="<td> $ "+costpermin+"</td>";
                     table_body+="<td> $ "+inst_total.toFixed(2)+"</td>";
@@ -96,8 +89,8 @@
         });
         table_body+="<tr><td></td><td></td><td>Total This Month</td><td> $ "+total.toFixed(2)+"</td>";
 
-	$("#bill-tbody").append($(table_body));
-    
+		$("#bill-tbody").append($(table_body));
+        }});
     });
     
 

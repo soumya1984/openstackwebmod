@@ -38,6 +38,8 @@ public class Server {
 	public Date updated;
 	@XmlElement(name = "credt")
 	public Date created;
+	@XmlElement(name = "upTime")
+	public int upTime;
 
 	public String getId() {
 		return id;
@@ -150,6 +152,14 @@ public class Server {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	
+	public int getUpTime() {
+		return upTime;
+	}
+	
+	public void setUpTime(int upTime) {
+		this.upTime = upTime;
+	}
 
 	@Override
 	public String toString() {
@@ -158,7 +168,7 @@ public class Server {
 				+ ", accessIPv6=" + accessIPv6 + ", status=" + status
 				+ ", progress=" + progress + ", tenantId=" + tenantId
 				+ ", userId=" + userId + ", keyName=" + keyName + ", hostId="
-				+ hostId + ", updated=" + updated + ", created=" + created
+				+ hostId + ", updated=" + updated + ", created=" + created + ",upTime=" + upTime 
 				+ "]";
 	}
 }

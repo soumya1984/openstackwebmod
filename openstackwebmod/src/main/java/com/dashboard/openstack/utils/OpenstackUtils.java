@@ -4,6 +4,7 @@
 package com.dashboard.openstack.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openstack4j.api.Builders;
@@ -14,8 +15,11 @@ import org.openstack4j.model.compute.Image;
 import org.openstack4j.model.compute.RebootType;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
+import org.openstack4j.model.compute.SimpleTenantUsage;
 import org.openstack4j.model.network.Network;
 import org.openstack4j.openstack.OSFactory;
+import org.openstack4j.openstack.common.ListResult;
+import org.openstack4j.openstack.compute.domain.NovaSimpleTenantUsage;
 
 import com.dashboard.domain.objects.ServerList;
 import com.dashboard.rest.request.bean.CreateServerRequest;
@@ -81,6 +85,8 @@ public class OpenstackUtils {
 		List<? extends Server> novaServers = compute.servers().list();
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
 		ServerList svrList = new ServerList();
+		
+
 		if (servers != null) {
 			// return new ArrayList<Image>(images);
 			for (Server nova : novaServers) {
@@ -94,6 +100,11 @@ public class OpenstackUtils {
 				customServ.setName(nova.getName());
 				customServ.setProgress(nova.getProgress());
 				customServ.setStatus(nova.getVmState());
+				for (SimpleTenantUsage.ServerUsage s_use : compute.quotaSets().getTenantUsage(nova.getTenantId()).getServerUsages()) {
+				  if (s_use.getInstanceId().equals(nova.getId())) {
+				    customServ.setUpTime(s_use.getUptime());
+				  }
+				}
 				//customServ.setTenantId(nova.getTenantId());
 				//customServ.setUpdated(nova.getUpdated());
 				//customServ.setUserId(nova.getUserId());
@@ -131,6 +142,10 @@ public class OpenstackUtils {
 		
 		
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
+		
+		List<String> networkId = new ArrayList<String>();
+		networkId.add("e4956e96-698f-4459-abb5-a3fdccca02b5");
+		
 		for (CreateServerRequest request : list) {
 			// Create a Server Model Object
 			ServerCreate sc = Builders
@@ -138,7 +153,7 @@ public class OpenstackUtils {
 					.name(request.getServername().toString())
 					.flavor(request.getFlavour().toString())
 					.image(request.getImageName().toString())
-					.networks(networkIdList)
+					.networks(networkId)
 					.build();
 			// Boot the Server
 			Server server = osc.compute().servers().boot(sc);
