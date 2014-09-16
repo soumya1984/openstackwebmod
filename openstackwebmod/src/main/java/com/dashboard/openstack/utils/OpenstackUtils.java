@@ -138,16 +138,23 @@ public class OpenstackUtils {
 		//get the list of the N/W......and use it in Round Robin Fashion 
 		List<? extends Network> networks = osc.networking().network().list();
 		List<String> networkIdList = getNetworkIdList(networks);
-		//int count=0;
+		int count=0;
 		
 		
 		List<com.dashboard.domain.objects.Server> servers = new ArrayList<com.dashboard.domain.objects.Server>();
 		
-		List<String> networkId = new ArrayList<String>();
-		networkId.add("e4956e96-698f-4459-abb5-a3fdccca02b5");
+		List<String> networkId=null;
 		
 		for (CreateServerRequest request : list) {
 			// Create a Server Model Object
+			if (count <= networkIdList.size()) {
+				networkId = new ArrayList<String>();
+				networkId.add(networkIdList.get(count));
+			}else{
+				count =0;
+				networkId = new ArrayList<String>();
+				networkId.add(networkIdList.get(count));
+			}
 			ServerCreate sc = Builders
 					.server()
 					.name(request.getServername().toString())
@@ -160,6 +167,7 @@ public class OpenstackUtils {
 			// mapping between customresponse & server response
 			com.dashboard.domain.objects.Server customServerRes = getCustomServer(server);
 			servers.add(customServerRes);
+			count++;
 		}
 		return servers;
 
