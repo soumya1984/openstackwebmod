@@ -9,22 +9,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "request")
+@XmlRootElement(name = "serverList")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CreateServerRequestList implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<CreateServerRequest> request = new ArrayList<CreateServerRequest>();
+	private List<CreateServerRequest> serverList = new ArrayList<CreateServerRequest>();
 
 	@XmlElementRef
 	public List<CreateServerRequest> getRequest() {
-		return request;
+		return serverList;
 	}
 
 	public void setRequest(List<CreateServerRequest> list) {
-		this.request = list;
+		this.serverList = list;
 
 	}
 
