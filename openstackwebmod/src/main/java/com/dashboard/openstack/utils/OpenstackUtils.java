@@ -174,6 +174,10 @@ public class OpenstackUtils {
 		os.compute().servers().action(serverId, Action.STOP);
 		return "success";
 		}
+		if(action.equalsIgnoreCase("delete")) {
+			os.compute().servers().delete(serverId);
+			return "success";
+		}
 		return "failure";
 	}
 

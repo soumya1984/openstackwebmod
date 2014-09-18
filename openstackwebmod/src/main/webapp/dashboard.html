@@ -181,11 +181,12 @@
 
 				  });
 				 if(start == true){
-					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Start\" class=\"btnstop\">Start!</div></button>");
+					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Start\" class=\"btnstop\">Start!</button>");
 				 }
 				 if(stop ==true){
-					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Stop\" class=\"btnstart\">Stop!</div></button>");
+					 table_body+=("<td><button type=\"button\" id="+serverID+" onClick=\"reply_click(this.id)\" value=\"Stop\" class=\"btnstart\">Stop!</button>");
 				 }
+				  table_body+=("<td><button type=\"button\" id="+counter+" onClick=killServer(\""+serverID+"\") value=\"Delete\" class=\"btnstart\">Delete</button>");
 				  table_body+="</tr>\n";
 				});
 				table_head+="</thead>";
@@ -209,6 +210,20 @@
     	$(window).trigger('resize');
     	$("#active-inst-button").click();
     });
+    
+   function killServer(server_id) {
+	   console.log("Into the killServer function at least");
+		var action = "delete";
+		var requesturl ="rest/openstack/doaction?&server_id="+server_id+"&action="+action+"&";
+		$.ajax({url:requesturl,success:function(data){
+			console.log("Successfully launched delete");
+	    	var html="<div><P>Successfully initiated the request,please check the status in dashboard </P></div>"
+	    	var myWindow = window.open("", "MsgWindow", "width=200, height=100");
+			   myWindow.document.write(html);
+			    }});			
+	}
+
+ 
    function reply_click(server_id) {
 				//alert(clicked_id);
 				var action = $("#"+server_id).val();
