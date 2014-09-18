@@ -127,6 +127,7 @@
         console.log("Loading page "+$("#serve-name").val());
     });
     
+    
 	    $("form input:radio").change(function () {
     	    if($('input:radio("name==radio_choice"):checked').val() == "Basic"){
         	    $("#service-create").hide();
@@ -139,9 +140,9 @@
 	    });
  
 	    $("#serve-type").change(function() {
-	        //console.log("Hello, changing selector "+$("#serve-spin").val());
+	        console.log("Hello, changing selector "+$("#serve-spin").val());
 	        //alert("Changed value of Select Element! Value of spinner is "+$("#serve-spin".value));
-	        if ($("#serve-type option:selected").val() =="SmallApplication") {
+	        if ($("#serve-type option:selected").val() =="SmallApp") {
 	            $("#serve-spin").val(1) ;
 	        }
 	        else if ($("#serve-type option:selected").val() =="WebSite") {
